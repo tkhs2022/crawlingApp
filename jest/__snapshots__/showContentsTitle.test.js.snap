@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContentsTitleButtonWithBorder.jsx onClickEvent 1`] = `
+<div>
+  <div>
+    <button
+      className="MuiButtonBase-root MuiButton-root MuiButton-text contents-title-button"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      selected={false}
+      tabIndex={0}
+      type="button"
+    >
+      <span
+        className="MuiButton-label"
+      >
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root"
+          focusable="false"
+          style={
+            Object {
+              "color": "#FFF",
+            }
+          }
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M15.5 5H11l5 7-5 7h4.5l5-7z"
+          />
+          <path
+            d="M8.5 5H4l5 7-5 7h4.5l5-7z"
+          />
+        </svg>
+      </span>
+    </button>
+  </div>
+  <div
+    className="contentTitleUnderBorderOriginal"
+    id="border-undefined"
+  />
+</div>
+`;

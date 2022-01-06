@@ -1,0 +1,74 @@
+{
+    "crawling": [
+        {
+            "kbn": 1,
+            "kbnname": "ニュース",
+            "jigyosyaid": 1,
+            "name": "共同通信",
+            "crawlingurl": "https://www.kyodo.co.jp/",
+            "xpathTitle": "//*[@id='Main']/div[3]/ul/li/a",
+            "xpathLink": "//*[@id='Main']/div[3]/ul/li/a",
+            "xpathImage": "/html/body/div[3]/div[1]/div[2]/div[5]/div[1]/img"
+        },
+        {
+            "kbn": 2,
+            "kbnname": "生活・雑貨",
+            "jigyosyaid": 7,
+            "name": "JBPress",
+            "crawlingurl": "https://jbpress.ismedia.jp/subcategory/%E3%83%A9%E3%82%A4%E3%83%95%E3%83%BB%E6%95%99%E9%A4%8A",
+            "xpathTitle": "/html/body/div[1]/div[4]/main/div[2]/a/div[2]",
+            "xpathLink": "/html/body/div[1]/div[4]/main/div[2]/a",
+            "xpathImage": "/html/body/div[1]/div[4]/main/div[2]/a/div[1]/img"
+        },
+        {
+            "kbn": 1,
+            "kbnname": "ニュース",
+            "jigyosyaid": 8,
+            "name": "STVニュース北海道",
+            "crawlingurl": "https://www.stv.jp/news/index.html",
+            "xpathTitle": "//*[@id='dNewsTops']/ul[1]/li/a/h4",
+            "xpathLink": "//*[@id='dNewsTops']/ul[1]/li/a",
+            "xpathImage": "//*[@id='dNewsTops']/ul[1]/li/a/div[1]/img"
+        },
+        {
+            "kbn": 3,
+            "kbnname": "スポーツ",
+            "jigyosyaid": 9,
+            "name": "日刊スポーツ新聞社",
+            "crawlingurl": "https://www.nikkansports.com/sports/news/",
+            "xpathTitle": "//*[@id='backNumberArea']/ul[1]/li/a/text()",
+            "xpathLink": "//*[@id='backNumberArea']/ul[1]/li/a",
+            "xpathImage": "//*[@id='backNumberArea']/ul[1]/li/a/img"
+        },
+        {
+            "kbn": 22,
+            "kbnname": "youtubeとか",
+            "jigyosyaid": "111",
+            "name": "aaa",
+            "crawlingurl": "https://dic.nicovideo.jp/",
+            "xpathTitle": "/html/body/div[2]/div[1]/div[3]/div[5]/div/div/a",
+            "xpathLink": "/html/body/div[2]/div[1]/div[3]/div[5]/div/div/a",
+            "xpathImage": ""
+        },
+        {
+            "kbn": 7,
+            "kbnname": "エッセイ・コラム",
+            "jigyosyaid": "a7788",
+            "name": "ジェイビープレス オートグラフ",
+            "crawlingurl": "https://autograph.ismedia.jp/",
+            "xpathTitle": "/html/body/div[2]/main/div/div[2]/div/a/div/div[2]/h2",
+            "xpathLink": "/html/body/div[2]/main/div/div/div/a",
+            "xpathImage": "/html/body/div[2]/main/div/div/div/a/div/div[1]/img"
+        },
+        {
+            "kbn": 6,
+            "kbnname": "ゲーム",
+            "jigyosyaid": 4,
+            "name": "マグミクス",
+            "crawlingurl": "https://magmix.jp/",
+            "xpathTitle": "//*[@id=\"home-list\"]/li[3]/ul/li/a/h3",
+            "xpathLink": "//*[@id='home-list']/li[3]/ul/li/a",
+            "xpathImage": "//*[@id='home-list']/li[3]/ul/li/a/figure/img"
+        }
+    ]
+}

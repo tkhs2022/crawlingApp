@@ -1,0 +1,194 @@
+{
+    "crawling": [
+        {
+            "kbn": 6,
+            "kbnname": "ゲーム",
+            "jigyosyaid": 4,
+            "name": "マグミクス",
+            "crawlingurl": "https://magmix.jp/",
+            "xpathTitle": "//*[@id=\"home-list\"]/li[3]/ul/li/a/h3",
+            "xpathLink": "//*[@id='home-list']/li[3]/ul/li/a",
+            "xpathImage": "//*[@id='home-list']/li[3]/ul/li/a/figure/img"
+        },
+        {
+            "kbn": 1,
+            "kbnname": "ニュース",
+            "jigyosyaid": 1,
+            "name": "共同通信",
+            "crawlingurl": "https://www.kyodo.co.jp/",
+            "xpathTitle": "//*[@id='Main']/div[3]/ul/li/a",
+            "xpathLink": "//*[@id='Main']/div[3]/ul/li/a",
+            "xpathImage": "//*[@id='Main']/div[3]/ul/li/a/img"
+        },
+        {
+            "kbn": 1,
+            "kbnname": "ニュース",
+            "jigyosyaid": 2,
+            "name": "産経新聞",
+            "crawlingurl": "https://www.sankei.com/",
+            "xpathTitle": "//*[@id='fusion-app']/div[3]/div[1]/section/div/div[7]/div/article/div/h2/a",
+            "xpathLink": "//*[@id='fusion-app']/div[3]/div[1]/section/div/div[7]/div/article/div/h2/a",
+            "xpathImage": "//*[@id='fusion-app']/div[3]/div[1]/section/div/div[7]/div/article/figure/a/img"
+        },
+        {
+            "kbn": 2,
+            "kbnname": "生活・雑貨",
+            "jigyosyaid": 2,
+            "name": "産経新聞",
+            "crawlingurl": "https://www.sankei.com/entertainments/",
+            "xpathTitle": "/html/body/div[1]/div[3]/div/section/div/div[7]/div/article/div/h3/a",
+            "xpathLink": "/html/body/div[1]/div[3]/div/section/div/div[7]/div/article/div/h3/a",
+            "xpathImage": "/html/body/div[1]/div[3]/div/section/div/article/div[2]/figure/a/img"
+        },
+        {
+            "kbn": 1,
+            "kbnname": "ニュース",
+            "jigyosyaid": 3,
+            "name": "ITmediaMobile",
+            "crawlingurl": "https://www.itmedia.co.jp/mobile/",
+            "xpathTitle": "//*[@id='colBoxTopStories']/div/div[2]/div[2]/div/div[2]/h3/a",
+            "xpathLink": "//*[@id='colBoxTopStories']/div/div[2]/div[2]/div/div[2]/h3/a",
+            "xpathImage": "//*[@id='colBoxTopStories']/div/div[2]/div[2]//div[1]/a/img"
+        },
+        {
+            "kbn": 4,
+            "kbnname": "映画・音楽",
+            "jigyosyaid": 4,
+            "name": "マグミクス",
+            "crawlingurl": "https://magmix.jp/",
+            "xpathTitle": "//*[@id='home-list']/li[4]/ul/li/a/h3",
+            "xpathLink": "//*[@id='home-list']/li[4]/ul/li/a",
+            "xpathImage": "//*[@id='home-list']/li[4]/ul/li/a/figure/img"
+        },
+        {
+            "kbn": 6,
+            "kbnname": "ゲーム",
+            "jigyosyaid": 4,
+            "name": "マグミクス",
+            "crawlingurl": "https://magmix.jp/",
+            "xpathTitle": "//*[@id='home-list']/li[3]/ul/li/a/h3",
+            "xpathLink": "//*[@id='home-list']/li[3]/ul/li/a",
+            "xpathImage": "//*[@id='home-list']/li[3]/ul/li/a/figure/img"
+        },
+        {
+            "kbn": 1,
+            "kbnname": "ニュース",
+            "jigyosyaid": 5,
+            "name": "読売新聞オンライン",
+            "crawlingurl": "https://www.yomiuri.co.jp/news/",
+            "xpathTitle": "//*[@id='latest_list_news']/article[1]/div/h3/a",
+            "xpathLink": "//*[@id='latest_list_news']/article[1]/div/h3/a",
+            "xpathImage": ""
+        },
+        {
+            "kbn": 1,
+            "kbnname": "ニュース",
+            "jigyosyaid": 7,
+            "name": "JBPress",
+            "crawlingurl": "https://jbpress.ismedia.jp/",
+            "xpathTitle": "/html/body/div[1]/div[2]/div/section[1]/div",
+            "xpathLink": "/html/body/div[1]/div[3]/div/section[1]/div/a",
+            "xpathImage": "/html/body/div[1]/div[3]/div/section[1]/div/a/div[1]/img"
+        },
+        {
+            "kbn": 2,
+            "kbnname": "生活・雑貨",
+            "jigyosyaid": 7,
+            "name": "JBPress",
+            "crawlingurl": "https://jbpress.ismedia.jp/subcategory/%E3%83%A9%E3%82%A4%E3%83%95%E3%83%BB%E6%95%99%E9%A4%8A",
+            "xpathTitle": "/html/body/div[1]/div[4]/main/div[2]/a/div[2]",
+            "xpathLink": "/html/body/div[1]/div[4]/main/div[2]/a",
+            "xpathImage": "/html/body/div[1]/div[4]/main/div[2]/a/div[1]/img"
+        },
+        {
+            "kbn": 1,
+            "kbnname": "ニュース",
+            "jigyosyaid": 8,
+            "name": "STVニュース北海道",
+            "crawlingurl": "https://www.stv.jp/news/index.html",
+            "xpathTitle": "//*[@id='dNewsTops']/ul[1]/li/a/h4",
+            "xpathLink": "//*[@id='dNewsTops']/ul[1]/li/a",
+            "xpathImage": "//*[@id='dNewsTops']/ul[1]/li/a/div[1]/img"
+        },
+        {
+            "kbn": 3,
+            "kbnname": "スポーツ",
+            "jigyosyaid": 9,
+            "name": "日刊スポーツ新聞社",
+            "crawlingurl": "https://www.nikkansports.com/sports/news/",
+            "xpathTitle": "//*[@id='backNumberArea']/ul[1]/li/a/text()",
+            "xpathLink": "//*[@id='backNumberArea']/ul[1]/li/a",
+            "xpathImage": "//*[@id='backNumberArea']/ul[1]/li/a/img"
+        },
+        {
+            "kbn": 2,
+            "kbnname": "生活・雑貨",
+            "jigyosyaid": 10,
+            "name": "citrus",
+            "crawlingurl": "https://citrus-net.jp/",
+            "xpathTitle": "//*[@id='sys-posts']/div[1]/section/ul/li/a/h3",
+            "xpathLink": "//*[@id='sys-posts']/div[1]/section/ul/li/a",
+            "xpathImage": "//*[@id='sys-posts']/div[1]/section/ul/li/a/div/img"
+        },
+        {
+            "kbn": 2,
+            "kbnname": "生活・雑貨",
+            "jigyosyaid": 11,
+            "name": "ESSE",
+            "crawlingurl": "https://esse-online.jp/",
+            "xpathTitle": "//*[@id='content-bottom-widgets']/div/div[1]/div[1]/div[2]/ul/li/a/h3",
+            "xpathLink": "//*[@id='content-bottom-widgets']/div/div[1]/div[1]/div[2]/ul/li/a",
+            "xpathImage": "//*[@id='content-bottom-widgets']/div/div[1]/div[1]/div[2]/ul/li/a/img"
+        },
+        {
+            "kbn": 2,
+            "kbnname": "生活・雑貨",
+            "jigyosyaid": 12,
+            "name": "楽天トラベル",
+            "crawlingurl": "https://travel.rakuten.co.jp/mytrip/",
+            "xpathTitle": "//*[@id='block-barrio-mytrip-content']/div/div/div/div/div/article/div/div/div/div[2]/div/span/a",
+            "xpathLink": "//*[@id='block-barrio-mytrip-content']/div/div/div/div/div/article/div/div/div/div[2]/div/span/a",
+            "xpathImage": "//*[@id='block-barrio-mytrip-content']/div/div/div/div/div/article/div/div/div/div[1]/div/div/a/img"
+        },
+        {
+            "kbn": 2,
+            "kbnname": "生活・雑貨",
+            "jigyosyaid": "12345",
+            "name": "a",
+            "crawlingurl": "a",
+            "xpathTitle": "a",
+            "xpathLink": "a",
+            "xpathImage": "a"
+        },
+        {
+            "kbn": 22,
+            "kbnname": "youtubeとか",
+            "jigyosyaid": "111",
+            "name": "aaa",
+            "crawlingurl": "https://dic.nicovideo.jp/",
+            "xpathTitle": "/html/body/div[2]/div[1]/div[3]/div[5]/div/div/a",
+            "xpathLink": "/html/body/div[2]/div[1]/div[3]/div[5]/div/div/a",
+            "xpathImage": ""
+        },
+        {
+            "kbn": 7,
+            "kbnname": "エッセイ・コラム",
+            "jigyosyaid": "a7788",
+            "name": "ジェイビープレス オートグラフ",
+            "crawlingurl": "https://autograph.ismedia.jp/",
+            "xpathTitle": "/html/body/div[2]/main/div/div[2]/div/a/div/div[2]/h2",
+            "xpathLink": "/html/body/div[2]/main/div/div/div/a",
+            "xpathImage": "/html/body/div[2]/main/div/div/div/a/div/div[1]/img"
+        },
+        {
+            "kbn": 3,
+            "kbnname": "スポーツ",
+            "jigyosyaid": "6578",
+            "name": "NIKE(ZOZOTOWN)",
+            "crawlingurl": "https://zozo.jp/brand/nike/shoes/sneakers/",
+            "xpathTitle": "//*[@id='searchResultList']/li[1]/div/div/div[2]/div[2]/div",
+            "xpathLink": "//*[@id='searchResultList']/li[1]/div/div/div[2]/div[1]/a",
+            "xpathImage": "//*[@id='goodsImg']"
+        }
+    ]
+}

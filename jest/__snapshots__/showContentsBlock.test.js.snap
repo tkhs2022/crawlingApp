@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`showContentsBlock.jsx 1`] = `
+<div
+  className="detail"
+  id={2}
+>
+  <div
+    className="article"
+  >
+    <div
+      className="MuiPaper-root MuiCard-root makeStyles-root-1 MuiPaper-elevation1 MuiPaper-rounded"
+    >
+      <button
+        className="MuiButtonBase-root MuiCardActionArea-root"
+        disabled={false}
+        onBlur={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
+        type="button"
+      >
+        <a
+          href="https://jbpress.ismedia.jp/articles/-/66896"
+          rel="noreferrer"
+          style={
+            Object {
+              "textDecoration": "none",
+            }
+          }
+          target="_blank"
+        >
+          <div
+            className="MuiCardMedia-root makeStyles-media-2"
+            style={
+              Object {
+                "backgroundImage": "url(\\"https://jbpress.ismcdn.jp/mwimgs/a/2/600mw/img_a2b3bf48688c17f97cc0b70824e4359e502174.jpg\\")",
+              }
+            }
+            title="日本人に「石の上にも三年」よりも「逃げ恥」が重要と思う理由"
+          />
+          <div
+            className="MuiCardContent-root"
+          >
+            <h2
+              className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary"
+            >
+              JBPress
+            </h2>
+            <h2
+              className="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary"
+            >
+              日本人に「石の上にも三年」よりも「逃げ恥」が重要と思う理由
+            </h2>
+          </div>
+        </a>
+        <span
+          className="MuiCardActionArea-focusHighlight"
+        />
+      </button>
+    </div>
+  </div>
+  <div
+    className="article"
+  >
+    <div
+      className="MuiPaper-root MuiCard-root makeStyles-root-1 MuiPaper-elevation1 MuiPaper-rounded"
+    >
+      <button
+        className="MuiButtonBase-root MuiCardActionArea-root"
+        disabled={false}
+        onBlur={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
+        type="button"
+      >
+        <a
+          href="https://jbpress.ismedia.jp/articles/-/66719"
+          rel="noreferrer"
+          style={
+            Object {
+              "textDecoration": "none",
+            }
+          }
+          target="_blank"
+        >
+          <div
+            className="MuiCardMedia-root makeStyles-media-2"
+            style={
+              Object {
+                "backgroundImage": "url(\\"https://jbpress.ismcdn.jp/mwimgs/2/5/600mw/img_250c1e03181a397a1fa68c3a76e7b91476218.jpg\\")",
+              }
+            }
+            title="8.29写真ルポ：灯が消えた池袋マルイ「最後の日」"
+          />
+          <div
+            className="MuiCardContent-root"
+          >
+            <h2
+              className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary"
+            >
+              JBPress
+            </h2>
+            <h2
+              className="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary"
+            >
+              8.29写真ルポ：灯が消えた池袋マルイ「最後の日」
+            </h2>
+          </div>
+        </a>
+        <span
+          className="MuiCardActionArea-focusHighlight"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;
