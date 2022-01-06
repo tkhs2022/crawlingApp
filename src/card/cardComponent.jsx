@@ -5,7 +5,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-// import * as testImage from "../data/testimage/noImage.jpg" ;
 
 /////////////////////////////////////////////////////////////////
 // スタイル。各種記事ブロックに収める画像とリンクをカードクラスで生成する。

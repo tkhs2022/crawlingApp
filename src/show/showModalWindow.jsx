@@ -2,7 +2,6 @@
 // モーダル画面を表示させるためのラッパークラス
 ///////////////////////////////////////////////////////////////// 
 import React, { useState } from "react";
-// import { Button, Modal, Grid, Typography, Paper, TextField, Fade} from "@material-ui/core";
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Grid from '@material-ui/core/Grid';
@@ -12,7 +11,6 @@ import TextField from '@material-ui/core/TextField';
 import Fade from '@material-ui/core/Fade';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
