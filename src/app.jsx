@@ -10,7 +10,6 @@ import Auth from './auth.jsx';
 import { Route, Switch } from 'react-router-dom';
 import store from "./store/store.js";
 import { Contents } from './index.jsx';
-import ContainerInMiddle from './ContainerInMiddle.js';
 
 ///////////////////////////////////////////////////////////////// 
 // メインコンポーネント
