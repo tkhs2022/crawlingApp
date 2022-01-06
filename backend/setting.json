@@ -1,0 +1,9 @@
+{
+    "anacondaPath":"C:/Users/waard/anaconda3",
+    "pyPath":"C:/Users/waard/Desktop/my-appforCrawling",
+    "backendHome":"C:/Users/waard/Desktop/my-app/backend",
+    "contentsPath":"C:/Users/waard/Desktop/my-app/src/data/contents",
+    "crawlingListPath":"C:/Users/waard/Desktop/my-app/src/data/crawling",
+    "kubunListPath":"C:/Users/waard/Desktop/my-app/src/data/kbns",
+    "reactLogPath":"C:/Users/waard/Desktop/my-app/log/react"
+}

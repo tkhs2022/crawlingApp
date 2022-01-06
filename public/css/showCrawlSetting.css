@@ -1,0 +1,127 @@
+@charset "UTF-8";
+html {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif!important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  overflow:scroll;
+  margin: 0;
+  background: #424242!important;
+  color: #FFF;
+}
+
+/* (共通)リンクの色を固定 */
+a,a:hover,a:visited{
+  color: inherit;
+}
+
+/*クローリング設定画面。アクションボタンの位置*/
+#button-krawlsetting {
+  right: -16rem;
+  top: 6rem;
+}
+
+/*クローリング設定画面。最終クロール日時と状態の欄の位置*/
+/*区分設定画面。最終更新日時の欄の位置*/
+div.MuiGrid-root.MuiGrid-grid-xs-2 {
+  right: -35rem;
+  top: 3rem;
+  position: relative; 
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/*クローリング設定画面。状態の欄のフォント調整*/
+#p-status-data {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  color:white;
+}
+
+/*クローリング設定画面。マテリアルテーブルの位置*/
+div.materialCrawlSetting > div {
+  right: -16.2rem;
+  top: 2rem;
+}
+
+/*クローリング設定画面。新規登録画面の区分選択*/
+#select-paperDiv-label {
+  top: 0.5em;
+  left: 0.5em;
+}
+
+/*クローリング設定画面。新規登録画面の区分選択。区分セレクトボックスの位置*/
+#select-paperDiv {
+  width: 10%;
+  padding-right: 1em;
+}
+
+/*クローリング設定画面。区分のタイトルラベルの位置*/
+#select-paperDiv > div > div {
+  margin-top: 16px;
+}
+
+/*クローリング設定画面。区分セレクトボックスの矢印の位置*/
+#select-paperDiv > div > svg {
+  margin-top: 6px;
+}
+
+/*区分設定画面。区分セットと対象データセットののマテリアルテーブルを覆うdiv*/
+.materialTableWrapper {
+  display: flex;
+}
+
+/*区分設定画面。区分セットのマテリアルテーブルの位置*/
+div.materialKubunSetting > div {
+  top: 5rem;
+}
+
+/*区分設定画面。対象データセットのマテリアルテーブルの位置*/
+div.materialDetailCrawlSetting > div {
+  top: 5rem;
+}
+
+/*区分設定画面。アクションボタンの位置*/
+#button-kubunsetting {
+  right: -16rem;
+  top: 6rem;
+}
+
+/* (共通)マテリアルテーブル。テーブルの中のテーブル位置*/
+/* div.Component-horizontalScrollContainer-12 { */
+div.Component-horizontalScrollContainer-33 {
+  padding: 1.5em;
+  padding-top: 0;
+}
+
+table > thead > tr > th:nth-child(1) > span {
+  font-size:0;
+} 
+
+.MuiTableCell-root {
+  padding: 0!important;
+  padding-left: 0.5em!important;
+  padding-right: 0.5em!important;
+  border-bottom:initial!important;
+} 
+
+/*(共通)マテリアルテーブル。テーブルの行ごとに色分け*/
+table > tbody > tr:nth-child(2n) {
+  background: #EDECF1;
+}
+
+/*(共通)マテリアルテーブル。タイトルヘッダーのフォントサイズ*/
+.MuiTypography-h6 {
+  font-size: 11pt!important;
+  font-weight: bold!important;
+}

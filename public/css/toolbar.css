@@ -1,0 +1,20 @@
+/* サイドバー */
+#root > div:nth-child(2) > div.MuiBox-root.css-k008qs > nav > div > div {
+    background: #444444;
+    color: #FFF;
+}
+/* ツールバー */
+#root > div:nth-child(2) > div.MuiBox-root.css-k008qs > header {
+    background: #444444;
+    color: #FFF;
+}
+/* ツールバーのテキスト */
+.toolbarTypography {
+    font-size:16pt!important;
+    font-weight: 100!important;
+}
+
+/*(共通)ツールバーのフォントサイズ*/
+.MuiTypography-body1 {
+    font-size: 0.8rem;
+}
