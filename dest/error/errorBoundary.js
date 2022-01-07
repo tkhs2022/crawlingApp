@@ -7,31 +7,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = _interopRequireDefault(require("react"));
+var React = _interopRequireWildcard(require("react"));
 
-var _loginUi = _interopRequireDefault(require("./loginUi.jsx"));
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-var _showContentsArea = _interopRequireDefault(require("./show/showContentsArea.jsx"));
-
-var _showCrawlSetting = _interopRequireDefault(require("./show/showCrawlSetting.jsx"));
-
-var _showKubunSetting = _interopRequireDefault(require("./show/showKubunSetting.jsx"));
-
-var _toolbar = _interopRequireDefault(require("./toolbar/toolbar.jsx"));
-
-var _errorBoundary = _interopRequireDefault(require("./error/errorBoundary.jsx"));
-
-var _commonFunc = require("./commonFunc.js");
-
-var _auth = _interopRequireDefault(require("./auth.jsx"));
-
-var _reactRouterDom = require("react-router-dom");
-
-var _store = _interopRequireDefault(require("./store/store.js"));
-
-var _index = require("./index.jsx");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -53,62 +33,74 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-///////////////////////////////////////////////////////////////// 
-// メインコンポーネント
-var App = /*#__PURE__*/function (_React$Component) {
-  _inherits(App, _React$Component);
+var fontFamily = "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu'," + "'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif";
 
-  var _super = _createSuper(App);
+var ErrorBoundary = /*#__PURE__*/function (_React$Component) {
+  _inherits(ErrorBoundary, _React$Component);
 
-  function App() {
-    _classCallCheck(this, App);
+  var _super = _createSuper(ErrorBoundary);
 
-    return _super.apply(this, arguments);
+  function ErrorBoundary(props) {
+    var _this;
+
+    _classCallCheck(this, ErrorBoundary);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      hasError: false,
+      error: null,
+      errorInfo: null
+    };
+    return _this;
   }
 
-  _createClass(App, [{
-    key: "componentWillMount",
-    value: ///////////////////////////////////////////////////////////////// 
-    // componentWillMount()
-    function componentWillMount() {
-      // コンテンツリストオブジェクトを取得
-      _index.Contents.getContentsList(_store.default.getState().componentReducer.selectedFileName); // ローディングCSSを無効化
-
-
-      (0, _commonFunc.cssFileDisable)("loading.css"); // コンテンツファイル名のリストを取得
-
-      _index.Contents.recentUpdateFileDate(1, "list"); // コンテンツリスト(最新のもの)最終更新日時を取得。=最終クローリング日時
-
-
-      _index.Contents.recentUpdateFileDate(1, "mtime");
-    } ///////////////////////////////////////////////////////////////// 
-    // レンダー
-
+  _createClass(ErrorBoundary, [{
+    key: "componentDidCatch",
+    value: function componentDidCatch(error, errorInfo) {
+      this.setState({
+        error: error,
+        errorInfo: errorInfo
+      });
+    }
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/_react.default.createElement(_errorBoundary.default, null, /*#__PURE__*/_react.default.createElement("div", {
-        className: "loading"
-      }, /*#__PURE__*/_react.default.createElement("span", {
-        className: "circle"
-      })), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-        exact: true,
-        path: "/login",
-        component: _loginUi.default
-      }), /*#__PURE__*/_react.default.createElement(_auth.default, null, /*#__PURE__*/_react.default.createElement(_toolbar.default, null), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-        path: "/ShowCrawlSetting",
-        component: _showCrawlSetting.default
-      }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-        path: "/ShowKubunSetting",
-        component: _showKubunSetting.default
-      }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-        path: "/ShowContentsArea",
-        component: _showContentsArea.default
-      }))));
+      if (this.state.hasError) {
+        var _this$state$error, _this$state$errorInfo;
+
+        // エラー時の表示
+        return /*#__PURE__*/React.createElement("div", {
+          style: {
+            marginLeft: "17rem",
+            marginRight: "17rem"
+          }
+        }, /*#__PURE__*/React.createElement("h1", {
+          style: {
+            fontFamily: fontFamily
+          }
+        }, "JavaScript\u306E\u81F4\u547D\u7684\u30A8\u30E9\u30FC"), /*#__PURE__*/React.createElement("pre", {
+          style: {
+            fontFamily: fontFamily
+          }
+        }, (_this$state$error = this.state.error) === null || _this$state$error === void 0 ? void 0 : _this$state$error.message), /*#__PURE__*/React.createElement("pre", {
+          style: {
+            fontFamily: fontFamily
+          }
+        }, (_this$state$errorInfo = this.state.errorInfo) === null || _this$state$errorInfo === void 0 ? void 0 : _this$state$errorInfo.componentStack));
+      }
+
+      return this.props.children;
+    }
+  }], [{
+    key: "getDerivedStateFromError",
+    value: function getDerivedStateFromError(error) {
+      return {
+        hasError: true
+      };
     }
   }]);
 
-  return App;
-}(_react.default.Component);
+  return ErrorBoundary;
+}(React.Component);
 
-exports.default = App;
+exports.default = ErrorBoundary;

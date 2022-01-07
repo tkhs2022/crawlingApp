@@ -22,7 +22,6 @@
     "history": "^4.9.0",
     "json-loader": "^0.5.7",
     "material-table": "^1.69.3",
-    "production": "0.0.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -37,14 +36,14 @@
   },
   "scripts": {
     "start:client": "webpack-dev-server --history-api-fallback",
-    "start": "react-scripts start",
+    "start": "node backend/index.js",
     "react": "react-scripts start",
     "eject": "react-scripts eject",
     "test": "jest",
     "dev": "webpack --mode development --watch",
-    "build": "babel src -d dest",
+    "build": "react-scripts build",
     "builder": "webpack",
-    "express": "node backend/index.js"
+    "heroku-postbuild": "npm install && npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -76,7 +75,7 @@
     "copy-webpack-plugin": "^9.0.1",
     "css-loader": "^2.1.0",
     "html-webpack-plugin": "^4.4.1",
-    "nodemon": "^2.0.14",
+    "nodemon": "^2.0.15",
     "postcss": "^7.0.39",
     "react-test-renderer": "^17.0.2",
     "style-loader": "^0.23.1",

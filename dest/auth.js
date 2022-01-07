@@ -9,27 +9,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _loginUi = _interopRequireDefault(require("./loginUi.jsx"));
-
-var _showContentsArea = _interopRequireDefault(require("./show/showContentsArea.jsx"));
-
-var _showCrawlSetting = _interopRequireDefault(require("./show/showCrawlSetting.jsx"));
-
-var _showKubunSetting = _interopRequireDefault(require("./show/showKubunSetting.jsx"));
-
-var _toolbar = _interopRequireDefault(require("./toolbar/toolbar.jsx"));
-
-var _errorBoundary = _interopRequireDefault(require("./error/errorBoundary.jsx"));
-
-var _commonFunc = require("./commonFunc.js");
-
-var _auth = _interopRequireDefault(require("./auth.jsx"));
-
-var _reactRouterDom = require("react-router-dom");
-
 var _store = _interopRequireDefault(require("./store/store.js"));
-
-var _index = require("./index.jsx");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53,62 +33,45 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-///////////////////////////////////////////////////////////////// 
-// メインコンポーネント
-var App = /*#__PURE__*/function (_React$Component) {
-  _inherits(App, _React$Component);
+var Auth = /*#__PURE__*/function (_React$Component) {
+  _inherits(Auth, _React$Component);
 
-  var _super = _createSuper(App);
+  var _super = _createSuper(Auth);
 
-  function App() {
-    _classCallCheck(this, App);
+  function Auth() {
+    _classCallCheck(this, Auth);
 
     return _super.apply(this, arguments);
   }
 
-  _createClass(App, [{
+  _createClass(Auth, [{
     key: "componentWillMount",
-    value: ///////////////////////////////////////////////////////////////// 
-    // componentWillMount()
-    function componentWillMount() {
-      // コンテンツリストオブジェクトを取得
-      _index.Contents.getContentsList(_store.default.getState().componentReducer.selectedFileName); // ローディングCSSを無効化
+    value: function componentWillMount() {
+      this.checkAuth();
+    }
+  }, {
+    key: "componentWillUpdate",
+    value: function componentWillUpdate() {
+      this.checkAuth();
+    } // セッションnullの場合、ログイン画面へ遷移
 
+  }, {
+    key: "checkAuth",
+    value: function checkAuth() {
+      var list = _store.default.getState();
 
-      (0, _commonFunc.cssFileDisable)("loading.css"); // コンテンツファイル名のリストを取得
-
-      _index.Contents.recentUpdateFileDate(1, "list"); // コンテンツリスト(最新のもの)最終更新日時を取得。=最終クローリング日時
-
-
-      _index.Contents.recentUpdateFileDate(1, "mtime");
-    } ///////////////////////////////////////////////////////////////// 
-    // レンダー
-
+      if (list.loginReducer.status == 0 || list.loginReducer.status == -1) {
+        window.location.href = "/login";
+      }
+    }
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/_react.default.createElement(_errorBoundary.default, null, /*#__PURE__*/_react.default.createElement("div", {
-        className: "loading"
-      }, /*#__PURE__*/_react.default.createElement("span", {
-        className: "circle"
-      })), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-        exact: true,
-        path: "/login",
-        component: _loginUi.default
-      }), /*#__PURE__*/_react.default.createElement(_auth.default, null, /*#__PURE__*/_react.default.createElement(_toolbar.default, null), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-        path: "/ShowCrawlSetting",
-        component: _showCrawlSetting.default
-      }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-        path: "/ShowKubunSetting",
-        component: _showKubunSetting.default
-      }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-        path: "/ShowContentsArea",
-        component: _showContentsArea.default
-      }))));
+      return /*#__PURE__*/_react.default.createElement("div", null, this.props.children);
     }
   }]);
 
-  return App;
+  return Auth;
 }(_react.default.Component);
 
-exports.default = App;
+exports.default = Auth;

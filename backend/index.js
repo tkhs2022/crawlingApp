@@ -1,5 +1,6 @@
 const port = process.env.PORT || 3001
 const express = require('express');
+const path = require('path');
 const app = express();
 const fs = require('fs');
 const execScript = require("./execScript.js");
@@ -22,6 +23,7 @@ app.use(allowCrossDomain);
 app.use(express.urlencoded({extended: true}));
 app.use(express.json({type: ['application/json', 'text/plain']}));
 app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../build')));	// ビルドしたreactと連携
 app.listen(port, () => {
   console.log(`listening on *:${port}`);
 });
@@ -442,4 +444,10 @@ app.post("/setDeleteKubunList", (req, res) => {
 	} finally {
 		res.json(resArray);
 	}
+});
+
+///////////////////////////////////////////////////////////////// 
+// 上記以外のリクエストはindex.htmlを返す
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname,'../build/index.html'));
 });

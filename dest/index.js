@@ -2,19 +2,24 @@
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.Contents = void 0;
+
 var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
-require("./css/App.css");
+var _app = _interopRequireDefault(require("./app.jsx"));
 
-var _App2 = _interopRequireWildcard(require("./App.jsx"));
+var _reactRedux = require("react-redux");
 
-var _contents = require("./data/contents.js");
+var _reactRouterDom = require("react-router-dom");
 
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+var _store = _interopRequireDefault(require("./store/store.js"));
 
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+var _contentsList = _interopRequireDefault(require("./actions/contentsList.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38,58 +43,34 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var Kbns = new _contents.KbnList(_contents.KbnList); ///////////////////////////////////////////////////////////////// 
-// ルートコンポーネント。画面を開いたときに最初に描画される。
-///////////////////////////////////////////////////////////////// 
+var Contents = new _contentsList.default(_contentsList.default); ///////////////////////////////////////////////////////////////// 
+// ルートコンポーネント
+
+exports.Contents = Contents;
 
 var Root = /*#__PURE__*/function (_React$Component) {
   _inherits(Root, _React$Component);
 
   var _super = _createSuper(Root);
 
-  function Root(props) {
-    var _this;
-
+  function Root() {
     _classCallCheck(this, Root);
 
-    _this = _super.call(this, props);
-    _this.KbnList = Kbns.getKbnList();
-    _this.state = {
-      mount: false
-    };
-    return _this;
+    return _super.apply(this, arguments);
   }
 
   _createClass(Root, [{
-    key: "HedderMortionAcive",
-    value: function HedderMortionAcive() {
-      this.state.mount ? this.setState({
-        mount: false
-      }) : this.setState({
-        mount: true
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
-      return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_App2.default, {
-        HedderMortionAcive: function HedderMortionAcive(e) {
-          return _this2.HedderMortionAcive(_this2.state.mount, e);
-        },
-        mount: this.state.mount
-      }), /*#__PURE__*/_react.default.createElement(_App2.ContentsTitleBlock, {
-        Kbns: this.KbnList,
-        mount: this.state.mount
-      }), /*#__PURE__*/_react.default.createElement(_App2.MainBlockControl, {
-        Kbns: this.KbnList,
-        mount: this.state.mount
-      }), /*#__PURE__*/_react.default.createElement("footer", null, /*#__PURE__*/_react.default.createElement("div", null, "\xA9 Microsoft 2021")));
+      return /*#__PURE__*/_react.default.createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react.default.createElement(_reactRedux.Provider, {
+        store: _store.default
+      }, /*#__PURE__*/_react.default.createElement(_app.default, null)));
     }
   }]);
 
   return Root;
 }(_react.default.Component);
+
+exports.default = Root;
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(Root, null), document.getElementById('root'));
