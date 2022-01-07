@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start:client": "webpack-dev-server --history-api-fallback",
-    "start": "babel-watch backend/server.js",
+    "start": "react-scripts start",
     "react": "react-scripts start",
     "eject": "react-scripts eject",
     "test": "jest",
