@@ -1,0 +1,296 @@
+@charset "UTF-8";
+
+html {
+  height: 100%;
+}
+ 
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif!important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  overflow:scroll;
+  margin: 0;
+  background: #424242!important;
+  color: #FFF;
+}
+
+/*ルート要素*/
+#root {
+  position: relative;  
+}
+
+/* リンクの色を固定 */
+a,a:hover,a:visited{
+  color: inherit;
+}
+
+/*(共通)ツールバーのフォントサイズ*/
+.MuiTypography-body1 {
+  font-size: 0.8rem;
+}
+
+/*2021/12/10 廃止 ヘッダー */
+/* #site-header{
+  background: rgb(247, 247, 247);
+  top: 0;
+  left: 0;
+  position: fixed; 
+  width: 100%;
+  z-index: 50;
+} */
+
+/*2021/12/10 廃止 ヘッダーに収まっている背景画像*/
+/* .imageSiteHeaderOriginal {
+  position: relative;
+  max-width: 100%;
+  height: 150px; 
+  background: url(http://localhost:3000/build/images/image_topbar.jpg) ;
+  background: url(../images/image_topbar.jpg) ;
+  background-repeat: no-repeat; 背景画像を繰り返し表示しない。 
+  background-position: center center; 背景画像は中央配置
+  transition: all 0.7s ease-in;
+}
+.imageSiteHeaderShow {
+  position: relative;
+  max-width: 100%;
+  height: 200px; 
+  background: url(../images/image_topbar.jpg) ;
+  background-repeat: no-repeat; 背景画像を繰り返し表示しない。 
+  background-position: center center; 背景画像は中央配置
+} 
+*/
+
+/*2021/12/10 廃止 ヘッダー内部のチェックアイコン*/
+/* .imageSiteHeaderOriginal > div {
+  width: 10%;
+  float: left;
+  height: 70%;
+  padding: 1.5em;
+}
+.imageSiteHeaderShow > div {
+  width: 10%;
+  float: left;
+  height: 50%;
+  padding: 1.5em;
+} */
+
+/*2021/12/10 廃止 天気予報表示欄*/
+/* #image-site-hedder > div:nth-child(1) {
+  width:25%;
+} */
+/*2021/12/10 廃止 履歴表示欄*/
+/* #image-site-hedder > div:nth-child(2) {
+  width: 40%;
+} */
+/*2021/12/10 廃止 履歴表示欄*/
+/* .cacheList {
+  transition: all 0.7s ease-in;
+  float:left;
+  z-index: 50;
+} */
+
+/* 設定メニュー
+#hamburger-button {
+  left: 70%;
+}
+.siteHedderButtonOriginal {
+  width:50px;
+  height:50px;
+  float: right;
+  top: 5em;
+}
+.siteHedderButtonShow {
+  width:50px;
+  height:50px;
+  float: right;
+  top: 5em;
+}
+#cache-list-box > div > div > button {
+  height: 50px;
+} */
+
+/*2021/12/10 廃止 ヘッダー内部の履歴表示部分*/
+ /* .CacheList {
+  width:50px;
+  height:50px;
+  float:left;
+  z-index: 50;
+  padding: 1.5em;
+} */
+
+/* コンテンツタイトル*/
+.contentsTitleOriginal {
+  transition: all 0.7s ease-in;
+  float: left;
+  position: fixed;
+  width: 30%;
+  top: 10%;
+  overflow: hidden;
+  z-index: 50;
+  display: flex;
+  align-items: flex-end!important;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding: 0.5em;
+  color: #FFF;
+}
+.contentsTitleShow {
+  float: left;
+  position: fixed;
+  top: 200px;
+  width: 100%;
+  height: 6%;
+  overflow: hidden;
+  z-index: 50;
+  background: rgb(247, 247, 247);
+}
+.name-title {
+  width: 40%;
+  float: left;
+  padding-left: 0.5em;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+.name-title > label {
+  float: left;
+  padding: 0.688em;
+  font-size: small;
+}
+
+/*(共通)画面で使用しているアイコンのサイズ*/
+/* .MuiSvgIcon-root {
+  width:0.7em!important;
+} */
+
+/*2021/12/10 廃止 コンテンツタイトルの下線の表示・非表示*/ 
+/* .contentTitleUnderBorderOriginal {
+  transform:translateX(-100%);
+}
+.contentTitleUnderBorderShow {
+  transform:translateY(30px);
+}
+.contentTitleUnderBorderHide {
+  transform:translateX(-100%);
+}
+.contents-title-button {
+  float: left;
+} */
+
+/*記事ブロック、その他コンテンツブロックを内包しているメインブロック*/
+.mainBlockControl {
+  width: 100%;
+  margin-top: 5.5rem;
+  min-height: 100vh;
+}
+div.mainBlockControl > div:nth-child(1) {
+  position: relative;
+}
+
+/*記事ブロックを内包しているブロックの表示・非表示*/
+@keyframes detailShow {
+  0%  {
+    opacity:0;
+  }
+  30%  {
+    opacity:0;
+  }
+  60%  {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+.detail {
+  position:absolute;
+  width: 70%;
+  right: -5%;
+  z-index: -1; 
+  transform:translateY(-150%);
+}
+.detailHide {
+  float: left;
+  position:absolute;
+  width: 70%;
+  height: 100%;
+  right: -5%;
+  overflow: hidden;
+  z-index: -1; 
+  transform:translateY(-120%);
+  animation-delay: 0.5s;
+}
+.detailShow {
+  float: left;
+  position:absolute;
+  width: 70%;
+  right: -5%;
+  z-index: 0; 
+  animation:detailShow 0.3s linear 1 forwards;
+  -moz-animation:detailShow 0.3s linear 1 forwards;
+  -webkit-animation:detailShow 0.3s linear 1 forwards;
+}
+
+/* 2021/12/10 廃止 */
+/* .detailShowActiveSiteHedder {
+  float: left;
+  position:absolute;
+  width: 80%;
+  height: 100%;
+  padding: 1em;
+  z-index: 0; 
+  transform:translateY(250%);
+  animation-name:detailShowActiveSiteHedder;
+  animation-duration: 1s;
+  animation-iteration-count:1;
+  animation-fill-mode:forwards;
+} */
+/* 2021/12/10 廃止 */
+/* @keyframes detailShowActiveSiteHedder {
+  from {
+    transform:translateY(100%);
+  } to {
+    transform:translateY(250%);
+  }
+} */
+
+/* 記事ブロック共通プロパティ */
+.article {
+  float: left;
+  width: 30%;
+  line-height: 1.5;
+  transition: top .5s;
+  padding-bottom: 1rem;
+  padding-left:0.5em;
+  padding-right:0.5em;
+}
+
+/* 記事ブロックに収めているタイトルとイメージ画像リンクのカードプロパティ */
+.MuiCardContent-root {
+  background: linear-gradient(rgba(255,255,255,0) 0, #C0C0C0 100%)!important;
+  padding-top: 7.5rem!important;
+}
+/* 各種コンテンツイメージの画像を入れるブロック*/
+.article-img {
+  max-width: 100%;
+  max-height: 100%; 
+  padding: 0.5em;
+}
+
+/* 記事ブロック内の会社名 */
+.MuiTypography-body2 {
+  font-size: 0.6rem!important;
+}
+
+/* 記事ブロック内の記事タイトルリンク。*/
+.MuiTypography-subtitle1  {
+  font-size: 0.8rem!important;
+  font-weight: bold!important;
+  padding-left:0.5em;
+  padding-right:0.5em;
+}
