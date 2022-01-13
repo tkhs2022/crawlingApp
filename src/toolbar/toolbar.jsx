@@ -101,7 +101,7 @@ function ResponsiveDrawer(props) {
 	<div>
 		<Toolbar id="toolBar-loginInfo" style={{fontSize:"0.8rem"}}>
 			<p style={{marginTop: "0.5em", marginBottom: "0.5em"}}>ユーザー :  {props.user}</p>
-			<p style={{marginTop: "0.5em", marginBottom: "0.5em"}}>更新時刻 :  {new Date().toLocaleString()}</p>
+			<p style={{marginTop: "0.5em", marginBottom: "0.5em"}}>更新時刻 :  {new Date().toLocaleString('ja-JP')}</p>
 		</Toolbar>
 		<Divider/>
 		<List>

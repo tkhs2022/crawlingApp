@@ -233,7 +233,11 @@ export function execCrawling() {
 			}
 		})
 		.then(function(responseJson) {
-			resolve(responseJson.flag); // true
+			if(responseJson.flag) {
+				resolve(responseJson.flag); // true
+			} else {
+				reject(responseJson.flag); // false
+			}
 		})
 		.catch(function(error) {
 			console.error("<crawlingList.js> execCrawling occared eerror.");

@@ -6,27 +6,20 @@ function execScript(exeName, pgName, filaName) {
     process.on('unhandledRejection', console.dir);
 
     return new Promise(function(resolve, reject){
-        try {
-            console.log(new Date().toLocaleString() + " <function>execScript python.exe launched. connect.py is Launched. crawl starting...");
-            exec(cmd_str,(err, stdout, stderr) => {
-                if(err) {
-                    console.error(new Date().toLocaleString() + " <function>execScript catched stderr: ");
-                    console.error(stderr);
-                    result["msg"] = stderr;
-                    reject(result);
-                } else {
-                    console.log(stdout);    //pythonプログラム実行中にコンソール出力している文字列を出力
-                    console.log(new Date().toLocaleString() + " crawling API Finished!!");
-                    result["flag"] = true;
-                    resolve(result);
-                }
-            });
-        } catch(error) {
-            console.error(new Date().toLocaleString() + " <function>execScript catched error: ");
-            console.error(error);
-            result["msg"] = error;
-            reject(result);
-        }
+        console.log(new Date().toLocaleString('ja-JP') + " <function>execScript python.exe launched. connect.py is Launched. crawl starting...");
+        exec(cmd_str,(err, stdout, stderr) => {
+            if(err) {
+                console.error(new Date().toLocaleString('ja-JP') + " <function>execScript catched stderr: ");
+                console.error(stderr);
+                result["msg"] = stderr;
+                reject(result);
+            } else {
+                console.log(stdout);    //pythonプログラム実行中にコンソール出力している文字列を出力
+                console.log(new Date().toLocaleString('ja-JP') + " crawling API Finished!!");
+                result["flag"] = true;
+                resolve(result);
+            }
+        });
     });
 };
 

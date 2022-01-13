@@ -127,7 +127,9 @@ export class ShowCrawlSetting extends React.Component {
       // クローリング実行処理呼び出し、実行結果取得
       execCrawling()
       .then((response) => {
-        // 実行結果レスポンスが返却された場合、ステータスを「実行完了」に。ローディングCSSを無効に。
+        // クローリングプログラム実行結果：正常終了
+        if(response) {
+          // 実行結果レスポンスが返却された場合、ステータスを「実行完了」に。ローディングCSSを無効に。
           this.props.setCrawlingStatus("実行完了");
           cssFileDisable("loading.css");
           element.style.backgroundColor = "#FF4F02";          
@@ -145,7 +147,13 @@ export class ShowCrawlSetting extends React.Component {
           })
           .catch((error) => {
             console.error(error);
-          });
+          })
+        // クローリングプログラム実行結果：異常終了
+        } else {
+          this.props.setCrawlingStatus("エラー");
+          cssFileDisable("loading.css");
+          element.style.backgroundColor = "#FF0000";
+        }
       })
       .catch((error) => {
         console.error(error);

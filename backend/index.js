@@ -31,7 +31,7 @@ app.listen(port, () => {
 app.post("/logging", (req, res) => {
 	var nowDate = new Date();
 	try {
-		console.log(nowDate.toLocaleString() + " " + "/logging post response. with: logging.js outLog");
+		console.log(nowDate.toLocaleString('ja-JP') + " " + "/logging post response. with: logging.js outLog");
 		console.log("data existed: " + reactLogPath + "/" + req.body.fileName + ".log");
 		// ログに出力する情報をオブジェクトに格納
 		var loggingList = {};
@@ -53,18 +53,18 @@ app.post("/requestLoginInfo", (req, res) => {
 	var nowDate = new Date();
 	try {
 		var resArray = {"result":false};
-		console.log(nowDate.toLocaleString() + " " + "/requestLoginInfo post response. with: action.js Login.");	
-		console.log(nowDate.toLocaleString() + " input usr:" + req.body.user + " pass:" + req.body.password)
+		console.log(nowDate.toLocaleString('ja-JP') + " " + "/requestLoginInfo post response. with: action.js Login.");	
+		console.log(nowDate.toLocaleString('ja-JP') + " input usr:" + req.body.user + " pass:" + req.body.password)
 		if(req.body.password != 99) {
-			console.log(nowDate.toLocaleString() + " result " + "login failed.");
+			console.log(nowDate.toLocaleString('ja-JP') + " result " + "login failed.");
 			resArray.result = false;
 		} else {
-			console.log(nowDate.toLocaleString() + " result " + "login successed.");
+			console.log(nowDate.toLocaleString('ja-JP') + " result " + "login successed.");
 			resArray.result = true;
 		}
 		res.json(resArray);	
 	} catch(error) {
-		console.error(nowDate.toLocaleString() + " result " + "error occered at index.js in requestLoginInfo.");
+		console.error(nowDate.toLocaleString('ja-JP') + " result " + "error occered at index.js in requestLoginInfo.");
 		console.error(error);
 	}
 });
@@ -81,12 +81,12 @@ app.post("/getContentsList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/getContentsList post response. with: contentsList.js getContentsList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/getContentsList post response. with: contentsList.js getContentsList");
 			console.log("data existed: " + contentsListJsonPath + "/" + req.body.fileName + ".json");
 			resArray.data = data;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/getContentsList post response. with: contentsList.js getContentsList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/getContentsList post response. with: contentsList.js getContentsList");
 			console.log("data undefined." + contentsListJsonPath + "/" + req.body.fileName + ".json");
 			resArray.flag = false;
 			console.log(resArray.flag);
@@ -112,7 +112,7 @@ app.post("/addNewCrawlingList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/addNewCrawlingList post response. with: crawlingList.js addNewCrawlingList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/addNewCrawlingList post response. with: crawlingList.js addNewCrawlingList");
 			console.log("data existed: " + crawlingListJsonPath + "/" + req.body.fileName);
 			// クローリングリストオブジェクトの中身を編集
 			var newCrawlingList = {};
@@ -134,7 +134,7 @@ app.post("/addNewCrawlingList", (req, res) => {
 			resArray.flag = true;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/addNewCrawlingList post response. with: crawlingList.js addNewCrawlingList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/addNewCrawlingList post response. with: crawlingList.js addNewCrawlingList");
 			console.log("data undefined." + crawlingListJsonPath + "/" + req.body.fileName);
 			resArray.flag = false;
 			console.log(resArray.flag);
@@ -161,12 +161,12 @@ app.post("/getCrawlingList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/getCrawlingList post response. with: crawlingList.js getCrawlingList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/getCrawlingList post response. with: crawlingList.js getCrawlingList");
 			console.log("data existed: " + crawlingListJsonPath + "/" + req.body.fileName);
 			resArray.data = data;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/getCrawlingList post response. with: crawlingList.js getCrawlingList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/getCrawlingList post response. with: crawlingList.js getCrawlingList");
 			console.log("data undefined." + crawlingListJsonPath + "/" + req.body.fileName);
 			resArray.flag = false;
 			console.log(resArray.flag);
@@ -192,7 +192,7 @@ app.post("/setUpdateCrawlingList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/setUpdateCrawlingList post response. with: contents.js setUpdateCrawlingList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setUpdateCrawlingList post response. with: contents.js setUpdateCrawlingList");
 			console.log("data existed: " + crawlingListJsonPath + "/" + req.body.fileName);
 			// クローリングリストオブジェクトの中身を編集
 			var target = data.crawling.findIndex((v) => v.kbn === req.body.kbn && v.jigyosyaid === req.body.jigyosyaid);
@@ -211,7 +211,7 @@ app.post("/setUpdateCrawlingList", (req, res) => {
 			resArray.flag = true;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/setUpdateCrawlingList post response. with: contents.js setUpdateCrawlingList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setUpdateCrawlingList post response. with: contents.js setUpdateCrawlingList");
 			console.log("data undefined." + crawlingListJsonPath + "/" + req.body.fileName);
 		}
 	} catch(error) {
@@ -232,7 +232,7 @@ app.post("/setDeleteCrawlingList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/setDeleteCrawlingList post response. with: contents.js setDeleteCrawlingList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setDeleteCrawlingList post response. with: contents.js setDeleteCrawlingList");
 			console.log("data existed: " + crawlingListJsonPath + "/" + req.body.fileName);
 			// クローリングリストオブジェクトの中身を編集
 			var target = data.crawling.findIndex((v) => v.kbn === req.body.targetKubun && v.jigyosyaid === req.body.targetJigyosyaid);
@@ -248,7 +248,7 @@ app.post("/setDeleteCrawlingList", (req, res) => {
 			resArray.flag = true;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/setDeleteCrawlingList post response. with: contents.js setDeleteCrawlingList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setDeleteCrawlingList post response. with: contents.js setDeleteCrawlingList");
 			console.log("data undefined." + crawlingListJsonPath + "/" + req.body.fileName);
 			resArray.flag = false;
 		}
@@ -268,7 +268,12 @@ app.post("/py", (req, res) => {
 	var resJsonFileName = req.body.fileName;
     var obj = {flag:false, msg:"nothing"}
 	return new Promise(function(resolve, reject) {
-		execScript.execScript(anacondaPath + "/python.exe", pyPath + "/connect.py", resJsonFileName)
+		var url = location.href;
+		var env_py = anacondaPath;
+		if(url === heroku_domain) {
+			console.log(env_py);
+		}
+		execScript.execScript(env_py + "/python.exe", pyPath + "/connect.py", resJsonFileName)
 		.then(function(reponse) {
 			obj["flag"] = reponse["flag"];
 			obj["msg"] = reponse["msg"];
@@ -280,7 +285,7 @@ app.post("/py", (req, res) => {
 			return res.json(obj);
 		})
 		.catch((error) => {
-			console.log(nowDate.toLocaleString() + " " + "/py post response catched error: ");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/py post response catched error: ");
 			console.error(error);
 			obj["msg"] = error;
 			reject(obj);
@@ -313,8 +318,8 @@ app.post("/recentUpdateFileDate", (req, res) => {
 		// ファイルリストを更新日時の降順にソート。この時、Date型である必要。
 		list.sort((a,b) => b.mtime - a.mtime);
 		if(req.body.request == "mtime") {
-			// mtimeの戻り値はDate型。.toLocaleString()で日本標準時版に補正できた。
-			list[0].mtime =	list[0].mtime.toLocaleString();
+			// mtimeの戻り値はDate型。.toLocaleString('ja-JP')で日本標準時版に補正できた。
+			list[0].mtime =	list[0].mtime.toLocaleString('ja-JP');
 			res.json(list[0]);
 		}
 		else if(req.body.request == "list") {
@@ -341,7 +346,7 @@ app.post("/addNewKubunList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/addNewKubun post response. with: contents.js setNewKubunList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/addNewKubun post response. with: contents.js setNewKubunList");
 			console.log("data existed: " + kubunListJsonPath + "/" + req.body.fileName);
 			// 区分オブジェクトの中身を編集
 			var newKubunList = {};
@@ -358,7 +363,7 @@ app.post("/addNewKubunList", (req, res) => {
 			resArray.flag = true;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/addNewKubun post response. with: contents.js setNewKubunList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/addNewKubun post response. with: contents.js setNewKubunList");
 			console.log("data undefined." + kubunListJsonPath + "/" + req.body.fileName);
 			resArray.flag = false;
 			console.log(resArray.flag);
@@ -385,12 +390,12 @@ app.post("/getKbnList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/getKbnList post response. with: kubunList.js getKbnList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/getKbnList post response. with: kubunList.js getKbnList");
 			console.log("data existed: " + kubunListJsonPath + "/" + req.body.fileName);
 			resArray.data = data;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/getKbnList post response. with: kubunList.js getKbnList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/getKbnList post response. with: kubunList.js getKbnList");
 			console.log("data undefined." + kubunListJsonPath + "/" + req.body.fileName);
 			resArray.flag = false;
 			console.log(resArray.flag);
@@ -418,7 +423,7 @@ app.post("/setEditKubunList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/setEditKubunList post response. with: kubunList.js setEditKubunList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setEditKubunList post response. with: kubunList.js setEditKubunList");
 			console.log("data existed: " + kubunListJsonPath + "/" + req.body.kubunFileName);
 			// 区分リストオブジェクトの中身を編集
 			var target = data.kbns.findIndex((v) => v.kbn === req.body.kbnBefore);
@@ -437,7 +442,7 @@ app.post("/setEditKubunList", (req, res) => {
 			resArray.flag = true;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/setEditKubunList post response. with: kubunList.js setEditKubunList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setEditKubunList post response. with: kubunList.js setEditKubunList");
 			console.log("data undefined." + kubunListJsonPath + "/" + req.body.kubunFileName);
 			resArray.flag = false;
 		}
@@ -449,7 +454,7 @@ app.post("/setEditKubunList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/setEditKubunList post response. with: kubunList.js setEditKubunList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setEditKubunList post response. with: kubunList.js setEditKubunList");
 			console.log("data existed: " + crawlingListJsonPath + "/" + req.body.krawlingListFileName);
 			// クローリングオブジェクトの中身を編集
 			data.crawling.map((list, index) => {
@@ -471,7 +476,7 @@ app.post("/setEditKubunList", (req, res) => {
 			resArray.flag = true;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/setEditKubunList post response. with: kubunList.js setEditKubunList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setEditKubunList post response. with: kubunList.js setEditKubunList");
 			console.log("data undefined." + crawlingListJsonPath + "/" + req.body.krawlingListFileName);
 			resArray.flag = false;
 		}
@@ -496,7 +501,7 @@ app.post("/setDeleteKubunList", (req, res) => {
 		var dataJSON = bufferData.toString();
 		var data = JSON.parse(dataJSON);
 		if(data) {
-			console.log(nowDate.toLocaleString() + " " + "/setDeleteKubunList post response. with: kubunList.js setDeleteKubunList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setDeleteKubunList post response. with: kubunList.js setDeleteKubunList");
 			console.log("data existed: " + kubunListJsonPath + "/" + req.body.fileName);
 			// 区分リストオブジェクトの中身を編集
 			var target = data.kbns.findIndex((v) => v.kbn === req.body.targetKubun);
@@ -512,7 +517,7 @@ app.post("/setDeleteKubunList", (req, res) => {
 			resArray.data = data;
 		} else {
 			// ファイル編集失敗。レスポンスfalse
-			console.log(nowDate.toLocaleString() + " " + "/setDeleteKubunList post response. with: kubunList.js setDeleteKubunList");
+			console.log(nowDate.toLocaleString('ja-JP') + " " + "/setDeleteKubunList post response. with: kubunList.js setDeleteKubunList");
 			console.log("data undefined." + kubunListJsonPath + "/" + req.body.fileName);
 			resArray.flag = false;
 		}
