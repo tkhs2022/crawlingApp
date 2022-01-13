@@ -73,9 +73,8 @@ export default function CrawlSettingMaterialTable(props) {
           cellStyle:{fontSize: "0.8em", width: "10%", minWidth: "10%"},
           headerStyle:{fontWeight: "bold",},
           onClick:(e, rowData) => {
-            props.modalWrapperFlag();
             props.setItem(rowData);
-            props.setSelectedCrawling(rowData);
+            props.modalWrapperFlag();
           }
         }
       ]}

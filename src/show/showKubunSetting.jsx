@@ -3,28 +3,28 @@
 ///////////////////////////////////////////////////////////////// 
 import React from "react";
 import { Button, Grid } from "@material-ui/core";
-// import update from 'immutability-helper';
 // コンテンツボックスに表示する記事データとクローリング情報のデータ
-import { Kbns, Crawlings } from './showContentsArea.jsx';
-import { Contents } from '../index.jsx';
+import { setNewKubunList } from '../actions/kubunList.js';
+import { recentUpdateFileDate } from '../actions/contentsList.js';
+import { setUpdateCrawlingList, addNewCrawlingList } from '../actions/crawlingList.js';
 import DetailCrawlSettingMaterialTable from '../materialTable/detailCrawlSettingMaterialTable.jsx';
 import KubunSettingMaterialTable from '../materialTable/kubunSettingMaterialTable.jsx';
 import { KubunSettingInModal, ShortKrawlSettingInModal, RegistKrawlSettingInModal } from './showModalWindow.jsx';
 import ModalWrapper from './showModalWindow.jsx';
 import cssFileControl from '../commonFunc.js';
 import { cssFileDisable } from '../commonFunc.js';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { columnsData } from '../actions/materialTableColumns';
-
+import { connect } from 'react-redux';
+// アイコン
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 ///////////////////////////////////////////////////////////////// 
 // 区分設定ページを生成する、ルートコンポーネント
 ///////////////////////////////////////////////////////////////// 
-export default class ShowKubunSetting extends React.Component {
+class ShowKubunSetting extends React.Component {
   constructor (props){
     super(props);
     this.state = {
-      kbns:Kbns.getKbnList(),
-      crawlings:Crawlings.getCrawlingList(),
+      kbns:this.props.thisKubunList,
       selectedCrawling:null,
       selectedItem:null,
       open:false,
@@ -52,9 +52,9 @@ export default class ShowKubunSetting extends React.Component {
   ///////////////////////////////////////////////////////////////// 
   // 区分セットテーブルで選択された区分のクロール対象データを返す。
   setSelectedCrawling = (item) => {
-    var filter =  this.state.crawlings.crawling.filter((v) => v.kbn == item.kbn);
+    var filter = this.props.thisCrawlingList.filter((v) => v.kbn === item.kbn);
     var dummyList = [];
-    if(filter.length != 0) {
+    if(filter.length !== 0) {
       filter.map((i, index) => {
         let list = {};
         list.kbn = i.kbn
@@ -80,7 +80,7 @@ export default class ShowKubunSetting extends React.Component {
     changedCrawlingXpathTitle,
     changedValueCrawlingXpathLink,
     changedValueCrawlingXpathImage) => { 
-      Crawlings.setUpdateCrawlingList (
+      setUpdateCrawlingList (
         item,
         changedCrawlingUrl,
         changedCrawlingXpathTitle,
@@ -89,9 +89,7 @@ export default class ShowKubunSetting extends React.Component {
       )
       .then((response) => {
         if (response.flag) {
-          // 既存のthis.stateにセット
-          var copyCrawlingList = Crawlings.getCrawlingList();
-          this.setState({crawlings:copyCrawlingList});
+          this.setSelectedCrawling(item);  // クロール対象データセット更新
         }
       })
       .catch((error) => {
@@ -103,13 +101,9 @@ export default class ShowKubunSetting extends React.Component {
   // クローリング情報の新規登録処理を呼び出す。
   // jsonオブジェクトのデータも更新する。
   callNewCrawlingList = (item) => { 
-    Crawlings.addNewCrawlingList(item)
-    .then((response) => {
-      if (response.flag) {
-        // 既存のthis.stateにセット
-        var copyCrawlingList = Crawlings.getCrawlingList();
-        this.setState({crawlings:copyCrawlingList});
-      }
+    addNewCrawlingList(item)
+    .then(()=>{
+      this.setSelectedCrawling(item);  // クロール対象データセット更新
     })
     .catch((error) => {
       console.error(error);
@@ -117,27 +111,43 @@ export default class ShowKubunSetting extends React.Component {
   }
 
   ///////////////////////////////////////////////////////////////// 
-  // this.state.crawlingsを更新する
-  setStateCrawling = () => {
-    var copyCrawlingList = Crawlings.getCrawlingList();
-    this.setState({crawlings:copyCrawlingList});
-  }
-
-  ///////////////////////////////////////////////////////////////// 
-  // 区分情報を新規登録する処理。this.state及びjsonデータも更新する。
+  // 区分情報を新規登録する処理。setNewKubunListメソッドの中でstoreのデータも更新している。
   callNewKubunList = (changedValueKubun, changedValueKubunName, changedValueComment) => { 
-    // 非同期処理開始
-    Kbns.setNewKubunList(changedValueKubun, changedValueKubunName, changedValueComment) // レスポンスはjsonオブジェクト
-    .then((response)=> {
-      // 区分リストのjsonデータの更新が正常終了した場合、this.stateの区分リストも更新する。
-      if(response.flag) {
-        var copyKubunList = Kbns.getKbnList();
-        this.setState({kbns:copyKubunList});
-      }
+    setNewKubunList(changedValueKubun, changedValueKubunName, changedValueComment)
+    .then(()=>{
+      this.setStateKbns();  // 区分データセット更新
     })
     .catch((error) => {
       console.error(error);
-    });
+    })
+  }
+
+  ///////////////////////////////////////////////////////////////// 
+  // 区分セットテーブルで選択された区分のクロール対象データを返す。
+  setSelectedCrawling = (item) => {
+    var filter =  this.props.thisCrawlingList.filter((v) => v.kbn == item.kbn);
+    var dummyList = [];
+    if(filter.length != 0) {
+      filter.map((i, index) => {
+        let list = {};
+        list.kbn = i.kbn
+        list.kbnname = i.kbnname
+        list.jigyosyaid = i.jigyosyaid
+        list.name = i.name
+        list.crawlingurl = i.crawlingurl
+        list.xpathTitle = i.xpathTitle
+        list.xpathLink = i.xpathLink
+        list.xpathImage = i.xpathImage
+        dummyList.push(list);
+      });
+    }
+    this.setState({selectedCrawling:dummyList});
+  };
+
+  ///////////////////////////////////////////////////////////////// 
+  // 区分データセット更新
+  setStateKbns = () => {
+    this.setState({kbns:this.props.thisKubunList});
   }
 
   ///////////////////////////////////////////////////////////////// 
@@ -163,7 +173,7 @@ export default class ShowKubunSetting extends React.Component {
   ///////////////////////////////////////////////////////////////// 
   // 最終更新日時を返す
   recentKubunUpdateDate = () => {
-    Contents.recentUpdateFileDate(2, "mtime") // パラメータ:2は区分リスト
+    recentUpdateFileDate(2, "mtime") // パラメータ:2は区分リスト
     .then((response) => {
       if(response) {
         this.setState({recentFileUpdate:response["mtime"]});
@@ -188,6 +198,7 @@ export default class ShowKubunSetting extends React.Component {
           <KubunSettingInModal 
             modalWrapperFlag={this.modalWrapperFlag}
             open={this.state.open}
+            kbns={this.state.kbns}
             callNewKubunList={this.callNewKubunList}
           />          
         );
@@ -196,7 +207,7 @@ export default class ShowKubunSetting extends React.Component {
           <RegistKrawlSettingInModal
             modalWrapperFlag={this.modalWrapperFlag}
             open={this.state.open}
-            kbns={Kbns.getKbnList()}
+            kbns={this.state.kbns}
             setModalIndex={this.setModalIndex}
             callNewCrawlingList={this.callNewCrawlingList}
           />
@@ -221,12 +232,14 @@ export default class ShowKubunSetting extends React.Component {
             <Button
               id="button-kubunsetting"
               style={{margin:"0.5em", backgroundColor:"#1976d2", color:"#FFF"}}
+              size="small"
               onClick={()=>this.modalWrapperFlag()}
               startIcon={<AddCircleIcon/>}
             >区分登録</Button>
             <Button
               id="button-kubunsetting"
               style={{margin:"0.5em", backgroundColor:"#1976d2", color:"#FFF"}}
+              size="small"
               onClick={()=>{
                 this.setModalIndex(1);
                 this.modalWrapperFlag()
@@ -243,11 +256,12 @@ export default class ShowKubunSetting extends React.Component {
           {/* パラメータの数字2は区分設定画面の区分セットを指す(他の画面と区別する為) */}
           <KubunSettingMaterialTable
             columns ={columnsData(2)}
-            data={this.state.kbns.kbns}
+            data={this.state.kbns}
             actions={2}
             editable={2}
             open={this.state.open}
             setSelectedCrawling={this.setSelectedCrawling}
+            setStateKbns={this.setStateKbns}
           />
           {/* パラメータの数字3は区分設定画面のクロール対象データセットを指す(他の画面と区別する為) */}
           <DetailCrawlSettingMaterialTable
@@ -257,7 +271,7 @@ export default class ShowKubunSetting extends React.Component {
             setModalIndex={this.setModalIndex}
             open={this.state.open}
             setItem={this.setItem}
-            setStateCrawling={this.setStateCrawling}
+            setSelectedCrawling={this.setSelectedCrawling}
           />
           <ModalWrapper
             modalWrapperFlag={this.modalWrapperFlag}
@@ -269,3 +283,17 @@ export default class ShowKubunSetting extends React.Component {
     );
   }
 }
+
+///////////////////////////////////////////////////////////////// 
+// ReactコンポーネントとReduxストアをコネクト
+const mapStateToProps = (state) => ({
+	thisKubunList: state.componentReducer.thisKubunList.kbns,
+  thisCrawlingList: state.componentReducer.thisCrawlingList.crawling
+});
+
+const ContainerShowKubunSetting = connect(
+	mapStateToProps,
+	null
+)(ShowKubunSetting);
+
+export default ContainerShowKubunSetting;

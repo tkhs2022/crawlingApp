@@ -50,7 +50,7 @@ export function stringToNumber(param) {
 		// 区分の半角変換と数値変換処理
 		var result = {};
 		var str = "";
-		if(param == undefined || param == "") {
+		if(param === undefined || param === "") {
 			alert("区分には数値を入力してください!");
 			throw "(区分リスト新規登録処理)区分入力エラー"; 
 		} else {

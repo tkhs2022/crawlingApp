@@ -8,6 +8,7 @@
     background: #444444;
     color: #FFF;
 }
+
 /* ツールバーのテキスト */
 .toolbarTypography {
     font-size:16pt!important;
@@ -17,4 +18,10 @@
 /*(共通)ツールバーのフォントサイズ*/
 .MuiTypography-body1 {
     font-size: 0.8rem;
+}
+
+/* ツールバー上部のログイン情報 */
+#toolBar-loginInfo {
+    align-items: flex-start;
+    flex-direction:column;
 }

@@ -4,8 +4,10 @@ import store from "../store/store.js";
 // ***レスポンスデータのイメージ***
 // array{"status:true, "result":{"user": "yamada"}}
 const Login = (user, password) => {
+    var _user = user;
+    var _password = password;
     return new Promise((resolve, reject) => {
-        store.dispatch(requestLogin());
+        store.dispatch(LOGIN_REQUEST());
         fetch("/requestLoginInfo", {
             method: "POST",
             mode: "no-cors",
@@ -25,16 +27,16 @@ const Login = (user, password) => {
         })
         .then(function(responseJson) {
             if(responseJson.result == true) {
-                store.dispatch(receiveLoginSuccess());
+                store.dispatch(LOGIN_RECEIVE_SUCCESS(_user));
                 resolve(true);
             } else {
-                store.dispatch(receiveLoginFailed());
+                store.dispatch(LOGIN_RECEIVE_FAILED());
                 resolve(false);
             }
         })
         .catch(function(error) {
             console.error(error);
-            store.dispatch(receiveLoginFailed());
+            store.dispatch(LOGIN_RECEIVE_FAILED());
             reject(false);
         });
     });
@@ -52,28 +54,29 @@ export const ActionType = {
 }
 
 // ログアウト処理
-export const logout = () => {
+export const LOGOUT = () => {
     return {
         type:ActionType.LOGOUT
     };
 }
 
 // ログインリクエスト中
-export const requestLogin = () => {
+export const LOGIN_REQUEST = () => {
     return {
         type: ActionType.LOGIN_REQUEST
     };
 }
 
 // リクエスト成功
-export const receiveLoginSuccess = () => {
+export const LOGIN_RECEIVE_SUCCESS = (nowUser) => {
     return {
-        type: ActionType.LOGIN_RECEIVE_SUCCESS
+        type: ActionType.LOGIN_RECEIVE_SUCCESS,
+        user:nowUser
     };
 }
 
 // リクエスト失敗
-export const receiveLoginFailed = () => {
+export const LOGIN_RECEIVE_FAILED = () => {
     return {
         type:ActionType.LOGIN_RECEIVE_FAILED
     };
@@ -88,6 +91,8 @@ export const ActionType2 = {
     SET_MTIME:"SET_MTIME",
 	SET_SELECTED_FILENAME:"SET_SELECTED_FILENAME",
     SET_CRAWLING_STATUS:"SET_CRAWLING_STATUS",
+    SET_KUBUN_LIST:"SET_KUBUN_LIST",
+    SET_CRAWLING_LIST:"SET_CRAWLING_LIST"
 }
 
 // コンテンツファイルリストを返却
@@ -116,11 +121,23 @@ export const SET_SELECTED_FILENAME = (selectedFileName, selectedContentsList) =>
 }
 
 export const SET_CRAWLING_STATUS = (nowStatus) => {
-    console.log("actions.SET_CRAWLING_STATUS called.");
-    console.log(nowStatus);
     return {
         type:ActionType2.SET_CRAWLING_STATUS,
         status:nowStatus
+    }
+}
+
+export const SET_KUBUN_LIST = (nowKubunList) => {
+    return {
+        type:ActionType2.SET_KUBUN_LIST,
+        kubunList:nowKubunList
+    }
+}
+
+export const SET_CRAWLING_LIST = (nowCrawlingList) => {
+    return {
+        type:ActionType2.SET_CRAWLING_LIST,
+        crawlingList:nowCrawlingList
     }
 }
 

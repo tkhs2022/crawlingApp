@@ -24,9 +24,9 @@ export function LoginUI(props) {
       Login(user, password)
       .then((response) => {
         var list = store.getState();
-        if(list.loginReducer.status == -1) {
+        if(list.loginReducer.status === -1) {
           setMessage("ユーザー名もしくはパスワードが違います。");
-        } else if(list.loginReducer.status == 1) {
+        } else if(list.loginReducer.status === 1) {
           setMessage("ログイン成功");
           props.history.push('/ShowContentsArea');
         }  

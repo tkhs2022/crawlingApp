@@ -1,10 +1,9 @@
 /////////////////////////////////////////////////////////////////
 // MaterialTable表示
 /////////////////////////////////////////////////////////////////
-import React, { forwardRef, useState } from "react";
-import MaterialTable from "material-table";
-import { Kbns } from '../show/showContentsArea.jsx';
-
+import React, { forwardRef, useState } from 'react';
+import MaterialTable from 'material-table';
+import { setEditKubunList, setDeleteKubunList } from '../actions/kubunList.js';
 // MaterialTableに使用するアイコンをインポート
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -58,52 +57,54 @@ export default function KubunSettingMaterialTable(props) {
     <MaterialTable
       title="区分セット"
       columns={props.columns}
-       data={data}
+       data={props.data}
        editable={{
         ///////////////////////////////////////////////////////////////// 
         // 区分リストの編集処理
         onRowUpdate:(newData, oldData) =>
         new Promise((resolve, reject) => {
           var dataSet = {"before":[], "after":[]};
-          // setTimeout(() => {
-            // const dataUpdate = [...data];
-            // const index = oldData.tableData.id;
-            // dataSet.before.push(data[index]);
-            // dataUpdate[index] = newData;
-            // setData([...dataUpdate]);
-            dataSet.before.push(oldData);
-            dataSet.after.push(newData);
-            resolve(dataSet);
-          // }, 1000);
+          const dataUpdate = [...data];
+          const index = oldData.tableData.id;
+          // アクションに渡すデータ(更新前・更新後)を保存。
+          dataSet.before.push(oldData);
+          dataSet.after.push(newData);
+          // マテリアルテーブルに配置するデータを更新。
+          dataUpdate[index] = newData;
+          setData([...dataUpdate]);
+          resolve(dataSet);
         })
         .then((response) => {
-          Kbns.setEditKubunList(response);
+          setEditKubunList(response)
+          .then(()=>{
+            props.setStateKbns(); // 区分リスト最新化
+          })
         })
         .catch((error) => {
           console.error(error);
         }),
         ///////////////////////////////////////////////////////////////// 
         // 区分リストの削除処理
-        onRowDelete:
-        (oldData) =>
-          new Promise((resolve,reject) => {
-            var dataSet = {"delete":[]};
-            // setTimeout(() => {
-              const dataDelete = [...data];
-              const index = oldData.tableData.id;
-              // バックエンドに渡す為の削除対象データ
-              dataSet.delete.push(oldData);
-              dataDelete.splice(index, 1);
-              setData([...dataDelete]);
-              resolve(dataSet)
-            // }, 1000);
+        onRowDelete:(oldData) =>
+        new Promise((resolve,reject) => {
+          var dataSet = {"delete":[]};
+          const dataDelete = [...data];
+          const index = oldData.tableData.id;
+          // バックエンドに渡す為の削除対象データ
+          dataSet.delete.push(oldData);
+          dataDelete.splice(index, 1);
+          setData([...dataDelete]);
+          resolve(dataSet)
+        })
+        .then((response) => {
+          setDeleteKubunList(response)
+          .then(()=>{
+            props.setStateKbns(); // 区分リスト最新化
           })
-          .then((response) => {
-            Kbns.setDeleteKubunList(response);
-          })
-          .catch((error) => {
-            console.error(error);
-          }),
+        })
+        .catch((error) => {
+          console.error(error);
+        }),
       }}
       options={{
         showTitle: true,
@@ -124,7 +125,7 @@ export default function KubunSettingMaterialTable(props) {
         // 詳細ボタン。現在登録されているクロールデータを表示する
         {
           icon:DetailPanel,
-          tooltip:"Edt your's settings.",
+          tooltip:"Show details.",
           cellStyle:{fontSize: "0.8em", width: "10%", minWidth: "10%"},
           headerStyle:{fontWeight: "bold",  width: "10%", minWidth: "10%"},
           onClick:(e, rowData) => {

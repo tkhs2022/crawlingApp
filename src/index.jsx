@@ -7,11 +7,6 @@ import { BrowserRouter } from 'react-router-dom'
 import store from './store/store.js';
 
 ///////////////////////////////////////////////////////////////// 
-// インスタンス生成エリア
-import ContentsList from './actions/contentsList.js';
-export const Contents = new ContentsList(ContentsList);
-
-///////////////////////////////////////////////////////////////// 
 // ルートコンポーネント
 export default class Root extends React.Component {
   render() {

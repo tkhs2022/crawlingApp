@@ -22,6 +22,10 @@ body {
 a,a:hover,a:visited{
   color: inherit;
 }
+/* (共通)input要素のサイズ */
+input {
+  font-size: small!important;
+}
 
 /*クローリング設定画面。アクションボタンの位置*/
 #button-krawlsetting {

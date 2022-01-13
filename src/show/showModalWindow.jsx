@@ -38,17 +38,17 @@ export default function ModalWrapper(props) {
 ///////////////////////////////////////////////////////////////// 
 // 実行結果画面。クローリング設定詳細画面(モーダル表示する)
 export function KrawlSettingInModal(props) {
-    const [changedValueCrawlingUrl, setValueCrawlingUrl] = useState(props.selectedCrawling.crawlingurl);
-    const [changedValueCrawlingXpathTitle, setValueCrawlingXpathTitle] = useState(props.selectedCrawling.xpathTitle);
-    const [changedValueCrawlingXpathLink, setValueCrawlingXpathLink] = useState(props.selectedCrawling.xpathLink);
-    const [changedValueCrawlingXpathImage, setValueCrawlingXpathImage] = useState(props.selectedCrawling.xpathImage);
+    const [changedValueCrawlingUrl, setValueCrawlingUrl] = useState(props.selectedItem.crawlingurl);
+    const [changedValueCrawlingXpathTitle, setValueCrawlingXpathTitle] = useState(props.selectedItem.xpathTitle);
+    const [changedValueCrawlingXpathLink, setValueCrawlingXpathLink] = useState(props.selectedItem.xpathLink);
+    const [changedValueCrawlingXpathImage, setValueCrawlingXpathImage] = useState(props.selectedItem.xpathImage);
 
     // Modalは非表示の状態でもレンダリング処理が入る為、openフラグがtrueの時にのみ表示する
     // クローリング情報を更新。タイミング:クローリング情報画面にて、updateボタンを押下した時
     const onClick = (e) => {
-      if (e == true) {
+      if (e === true) {
         props.callUpdateCrawlingList(
-          props.selectedCrawling,
+          props.selectedItem,
           changedValueCrawlingUrl,
           changedValueCrawlingXpathTitle,
           changedValueCrawlingXpathLink,
@@ -67,58 +67,61 @@ export function KrawlSettingInModal(props) {
             <div style={{margin: 8}}>
               <label style={{fontSize:"12", fontWeight:"bold"}}>クロール設定詳細</label>
             </div>
+            <div style={{margin: 8}}>
+              <label style={{fontSize:"small"}}>※クローリング実行時のデータを表示しています。</label>
+            </div>
             <div>
               <TextField
                 label="区分"
                 defaultValue={props.selectedItem.kbn}                
-                style={{width: "10%", margin: 8, fontSize:"midium"}}
+                style={{width: "10%", margin: 8}}
                 rows={1}
                 disabled="false"
               ></TextField>
               <TextField
                 label="区分名称"
                 defaultValue={props.selectedItem.kbnname}                
-                style={{width: "20%", margin: 8, fontSize:"midium"}}
+                style={{width: "20%", margin: 8}}
                 rows={1}
                 disabled="false"
               ></TextField>
               <TextField
-                  label="サイトID"
-                  defaultValue={props.selectedItem.jigyosyaid}                
-                  style={{width: "10%", margin: 8, fontSize:"midium"}}
-                  rows={1}
-                  disabled="false"
-                ></TextField>
-                <TextField
-                  label="サイト名称"
-                  defaultValue={props.selectedItem.name}                
-                  style={{width: "20%", margin: 8, fontSize:"midium"}}
-                  rows={1}
-                  disabled="false"
-                ></TextField>
+                label="サイトID"
+                defaultValue={props.selectedItem.jigyosyaid}                
+                style={{width: "10%", margin: 8}}
+                rows={1}
+                disabled="false"
+              ></TextField>
               <TextField
-                  label="記事ID"
-                  defaultValue={props.selectedItem.kiziid}                
-                  style={{width: "21.5%", margin: 8, fontSize:"midium"}}
-                  rows={1}
-                  disabled="false"
-                ></TextField>
+                label="サイト名称"
+                defaultValue={props.selectedItem.name}                
+                style={{width: "20%", margin: 8}}
+                rows={1}
+                disabled="false"
+              ></TextField>
+              <TextField
+                label="記事ID"
+                defaultValue={props.selectedItem.kiziid}                
+                style={{width: "21.5%", margin: 8}}
+                rows={1}
+                disabled="false"
+              ></TextField>
             </div>
             <div>
               <TextField
-                    label="記事タイトル"
-                    defaultValue={props.selectedItem.title}
-                    style={{ width: "90%", margin: 8, fontSize:"midium"}}
-                    fullWidth  
-                    rows={1}
-                    disabled="false"
+                label="記事タイトル"
+                defaultValue={props.selectedItem.title}
+                style={{ width: "90%", margin: 8}}
+                fullWidth  
+                rows={1}
+                disabled="false"
               ></TextField>
             </div>
             <div>
               <TextField
                 label="リンク"
                 defaultValue={props.selectedItem.source}
-                style={{ width: "90%", margin: 8, fontSize:"midium"}}
+                style={{ width: "90%", margin: 8}}
                 fullWidth
                 rows={1}
                 disabled="false"
@@ -128,7 +131,7 @@ export function KrawlSettingInModal(props) {
               <TextField
                 label="イメージファイル"
                 defaultValue={props.selectedItem.image}
-                style={{ width: "90%", margin: 8, fontSize:"midium"}}
+                style={{ width: "90%", margin: 8}}
                 fullWidth
                 rows={1}
                 disabled="false"
@@ -137,8 +140,8 @@ export function KrawlSettingInModal(props) {
             <div>
               <TextField
                 label="サイトのURL"
-                defaultValue={props.selectedCrawling.crawlingurl}
-                style={{ width: "90%", margin: 8, fontSize:"midium"}}
+                defaultValue={props.selectedItem.crawlingurl}
+                style={{ width: "90%", margin: 8}}
                 fullWidth
                 rows={1}
                 onChange={(e)=> setValueCrawlingUrl(e.target.value)}
@@ -147,8 +150,8 @@ export function KrawlSettingInModal(props) {
             <div>
               <TextField
                 label="タイトルのXpath"
-                defaultValue={props.selectedCrawling.xpathTitle}
-                style={{ width: "90%", margin: 8, fontSize:"midium"}}
+                defaultValue={props.selectedItem.xpathTitle}
+                style={{ width: "90%", margin: 8}}
                 fullWidth
                 rows={1}
                 onChange={(e)=> setValueCrawlingXpathTitle(e.target.value)}
@@ -157,8 +160,8 @@ export function KrawlSettingInModal(props) {
             <div>
               <TextField
                 label="リンクのXpath"
-                defaultValue={props.selectedCrawling.xpathLink}
-                style={{ width: "90%", margin: 8, fontSize:"midium"}}
+                defaultValue={props.selectedItem.xpathLink}
+                style={{ width: "90%", margin: 8}}
                 fullWidth
                 rows={1}
                 onChange={(e)=> setValueCrawlingXpathLink(e.target.value)}
@@ -167,27 +170,29 @@ export function KrawlSettingInModal(props) {
             <div>
               <TextField
                 label="イメージファイルのXpath"
-                defaultValue={props.selectedCrawling.xpathImage}
-                style={{ width: "90%", margin: 8, fontSize:"midium"}}
+                defaultValue={props.selectedItem.xpathImage}
+                style={{ width: "90%", margin: 8}}
                 fullWidth
                 rows={1}
                 onChange={(e)=> setValueCrawlingXpathImage(e.target.value)}
               />
             </div>
           </Typography>
-          <Grid container style={{fontSize:"midium"}} justify="flex-end" direction="row">
+          <Grid container style={{fontSize:"small"}} justify="flex-end" direction="row">
             <Grid item>
               <Button
-                style={{margin: "1.5em", fontSize:"midium"}}
+                style={{margin: "1.5em"}}
+                size="small"
                 variant="contained"
                 color="secondary"
                 onClick={(e)=>onClick(true, e)}
                 startIcon={<AddCircleIcon/>}
               >
-              更新
+              更新&nbsp;&nbsp;
               </Button>
               <Button
-                style={{margin: "1.5em", fontSize:"midium"}}
+                style={{margin: "1.5em"}}
+                size="small"
                 variant="contained"
                 color="secondary"
                 onClick={(e)=>onClick(false, e)}
@@ -213,7 +218,7 @@ export function ShortKrawlSettingInModal(props) {
   // Modalは非表示の状態でもレンダリング処理が入る為、openフラグがtrueの時にのみ表示する
   // クローリング情報を更新。タイミング:クローリング情報画面にて、updateボタンを押下した時
   const onClick = (e) => {
-    if (e == true) {
+    if (e === true) {
       props.callUpdateCrawlingList(
         props.selectedItem,
         changedValueCrawlingUrl,
@@ -239,28 +244,28 @@ export function ShortKrawlSettingInModal(props) {
             <TextField
               label="区分"
               defaultValue={props.selectedItem.kbn}                
-              style={{width: "10%", margin: 8, fontSize:"midium"}}
+              style={{width: "10%", margin: 8}}
               rows={1}
               disabled="false"
             ></TextField>
             <TextField
               label="区分名称"
               defaultValue={props.selectedItem.kbnname}                
-              style={{width: "20%",　margin: 8, fontSize:"midium"}}
+              style={{width: "20%",margin: 8}}
               rows={1}
               disabled="false"
             ></TextField>
             <TextField
                 label="サイトID"
                 defaultValue={props.selectedItem.jigyosyaid}                
-                style={{width: "10%", margin: 8, fontSize:"midium"}}
+                style={{width: "10%", margin: 8}}
                 rows={1}
                 disabled="false"                
               ></TextField>
               <TextField
                 label="サイト名称"
                 defaultValue={props.selectedItem.name}                
-                style={{width: "20%", margin: 8, fontSize:"midium"}}
+                style={{width: "20%", margin: 8}}
                 rows={1}
                 disabled="false"
               ></TextField>
@@ -269,7 +274,7 @@ export function ShortKrawlSettingInModal(props) {
             <TextField
               label="サイトのURL"
               defaultValue={props.selectedItem.crawlingurl}
-              style={{ width: "90%", margin: 8, fontSize:"midium"}}
+              style={{ width: "90%", margin: 8}}
               fullWidth
               rows={1}
               onChange={(e)=> setValueCrawlingUrl(e.target.value)}
@@ -279,7 +284,7 @@ export function ShortKrawlSettingInModal(props) {
             <TextField
               label="タイトルのXpath"
               defaultValue={props.selectedItem.xpathTitle}
-              style={{ width: "90%", margin: 8, fontSize:"midium"}}
+              style={{ width: "90%", margin: 8}}
               fullWidth
               rows={1}
               onChange={(e)=> setValueCrawlingXpathTitle(e.target.value)}
@@ -289,7 +294,7 @@ export function ShortKrawlSettingInModal(props) {
             <TextField
               label="リンクのXpath"
               defaultValue={props.selectedItem.xpathLink}
-              style={{ width: "90%", margin: 8, fontSize:"midium"}}
+              style={{ width: "90%", margin: 8}}
               fullWidth
               rows={1}
               onChange={(e)=> setValueCrawlingXpathLink(e.target.value)}
@@ -299,26 +304,28 @@ export function ShortKrawlSettingInModal(props) {
             <TextField
               label="イメージファイルのXpath"
               defaultValue={props.selectedItem.xpathImage}
-              style={{ width: "90%", margin: 8, fontSize:"midium"}}
+              style={{ width: "90%", margin: 8}}
               fullWidth
               rows={1}
               onChange={(e)=> setValueCrawlingXpathImage(e.target.value)}
             />
           </div>
         </Typography>
-        <Grid container style={{fontSize:"midium"}} justify="flex-end" direction="row">
+        <Grid container style={{fontSize:"small"}} justify="flex-end" direction="row">
           <Grid item>
             <Button
-              style={{margin: "1.5em", fontSize:"midium"}}
+              style={{margin: "1.5em"}}
+              size="small"
               variant="contained"
               color="secondary"
               onClick={(e)=>onClick(true, e)}
               startIcon={<AddCircleIcon/>}
             >
-            更新
+            更新&nbsp;&nbsp;
             </Button>
             <Button
-              style={{margin: "1.5em", fontSize:"midium"}}
+              style={{margin: "1.5em"}}
+              size="small"
               variant="contained"
               color="secondary"
               onClick={(e)=>onClick(false, e)}
@@ -345,15 +352,13 @@ export function RegistKrawlSettingInModal(props) {
   const [changedValueCrawlingXpathLink, setValueCrawlingXpathLink] = useState("");
   const [changedValueCrawlingXpathImage, setValueCrawlingXpathImage] = useState("");
 
-  const kbns = props.kbns;
-
   ///////////////////////////////////////////////////////////////// 
   // 区分セレクトボックスで選択した区分の名称を、区分名称欄に自動入力する処理
   const callSetKbnNameLabel = (targetValue) => {
-    var index = kbns["kbns"].findIndex((v) => v.kbn === targetValue);
+    var index = props.kbns.findIndex((v) => v.kbn === targetValue);
 
-    if(index != -1) {
-      var label = kbns["kbns"][index].kbnname;
+    if(index !== -1) {
+      var label = props.kbns[index].kbnname;
       setValueKubunName(label);
       setValueKubun(targetValue);
     }
@@ -362,7 +367,7 @@ export function RegistKrawlSettingInModal(props) {
   // Modalは非表示の状態でもレンダリング処理が入る為、openフラグがtrueの時にのみ表示する
   // クローリング情報を更新。タイミング:クローリング情報画面にて、updateボタンを押下した時
   const onClick = (e) => {
-    if (e == true) {
+    if (e === true) {
       var paramObj = {};
       paramObj["kbn"] = changedValueKubun;
       paramObj["kbnname"] = changedValueKubunName;
@@ -397,10 +402,10 @@ export function RegistKrawlSettingInModal(props) {
                 labelId="select-paperDiv-label"
                 className="select-paperDiv"
                 value={changedValueKubun}
-                style={{width: "100%", margin: 8, fontSize:"midium"}}
+                style={{width: "100%", margin: 8}}
                 onChange={(e)=> callSetKbnNameLabel(e.target.value)}
               >
-                {props.kbns["kbns"].map((item, key) => {
+                {props.kbns.map((item, key) => {
                   return(
                     <MenuItem value={item.kbn} key={key}>{item.kbn}</MenuItem>
                   );
@@ -410,21 +415,21 @@ export function RegistKrawlSettingInModal(props) {
             <TextField
               // label="区分名称"
               label={changedValueKubunName}
-              style={{width: "20%",　margin: 8, fontSize:"midium"}}
+              style={{width: "20%",margin: 8}}
               rows={1}
               disabled="false"
             ></TextField>
             <TextField
                 label="事業者ID"
                 defaultValue={changedValueJigyosyaid}
-                style={{width: "10%", margin: 8, fontSize:"midium"}}
+                style={{width: "10%", margin: 8}}
                 rows={1}
                 onChange={(e)=> setValueJigyosyaid(e.target.value)}
             ></TextField>
             <TextField
               label="事業者名"
               defaultValue={changedValueName}
-              style={{width: "20%", margin: 8, fontSize:"midium"}}
+              style={{width: "20%", margin: 8}}
               rows={1}
               onChange={(e)=> setValueName(e.target.value)}
             ></TextField>
@@ -433,7 +438,7 @@ export function RegistKrawlSettingInModal(props) {
             <TextField
               label="サイトのURL"
               defaultValue={changedValueCrawlingUrl}
-              style={{ width: "90%", margin: 8, fontSize:"midium"}}
+              style={{ width: "90%", margin: 8}}
               fullWidth
               rows={1}
               onChange={(e)=> setValueCrawlingUrl(e.target.value)}
@@ -443,7 +448,7 @@ export function RegistKrawlSettingInModal(props) {
             <TextField
               label="タイトルのXpath"
               defaultValue={changedValueCrawlingXpathTitle}
-              style={{ width: "90%", margin: 8, fontSize:"midium"}}
+              style={{ width: "90%", margin: 8}}
               fullWidth
               rows={1}
               onChange={(e)=> setValueCrawlingXpathTitle(e.target.value)}
@@ -453,7 +458,7 @@ export function RegistKrawlSettingInModal(props) {
             <TextField
               label="リンクのXpath"
               defaultValue={changedValueCrawlingXpathLink}
-              style={{ width: "90%", margin: 8, fontSize:"midium"}}
+              style={{ width: "90%", margin: 8}}
               fullWidth
               rows={1}
               onChange={(e)=> setValueCrawlingXpathLink(e.target.value)}
@@ -463,26 +468,28 @@ export function RegistKrawlSettingInModal(props) {
             <TextField
               label="イメージファイルのXpath"
               defaultValue={changedValueCrawlingXpathImage}
-              style={{ width: "90%", margin: 8, fontSize:"midium"}}
+              style={{ width: "90%", margin: 8}}
               fullWidth
               rows={1}
               onChange={(e)=> setValueCrawlingXpathImage(e.target.value)}
             />
           </div>
         </Typography>
-        <Grid container style={{fontSize:"midium"}} justify="flex-end" direction="row">
+        <Grid container style={{fontSize:"small"}} justify="flex-end" direction="row">
           <Grid item>
             <Button
-              style={{margin: "1.5em", fontSize:"midium"}}
+              style={{margin: "1.5em"}}
+              size="small"
               variant="contained"
               color="secondary"
               onClick={(e)=>onClick(true)}
               startIcon={<AddCircleIcon/>}
             >
-            登録
+            登録&nbsp;&nbsp;
             </Button>
             <Button
-              style={{margin: "1.5em", fontSize:"midium"}}
+              style={{margin: "1.5em"}}
+              size="small"
               variant="contained"
               color="secondary"
               onClick={(e)=>onClick(false)}
@@ -500,6 +507,7 @@ export function RegistKrawlSettingInModal(props) {
 ///////////////////////////////////////////////////////////////// 
 // 区分設定を新規登録する画面(モーダル表示する)
 export function KubunSettingInModal(props) {
+  const [kbns, setkbns] = useState(props.kbns);
   const [changedValueKubun, setValueKubun] = useState("");
   const [changedValueKubunName, setValueKubunName] = useState("");
   const [changedValueComment, setValueComment] = useState("");
@@ -507,8 +515,8 @@ export function KubunSettingInModal(props) {
   // Modalは非表示の状態でもレンダリング処理が入る為、openフラグがtrueの時にのみ表示する
   // 区分情報を新たに登録。タイミング:クローリング情報画面にて、updateボタンを押下した時
   const onClick = (e) => {
-    if (e == true) {
-      if(changedValueKubun != "" && changedValueKubunName != "" && changedValueComment != "") {
+    if (e === true) {
+      if(changedValueKubun !== "" && changedValueKubunName !== "" && changedValueComment !== "") {
         // 親コンポーネントの区分リスト新規登録処理を呼び出す
         props.callNewKubunList(
           changedValueKubun,
@@ -535,39 +543,41 @@ export function KubunSettingInModal(props) {
             <TextField
               label="区分"
               defaultValue={changedValueKubun}
-              style={{width: "10%", margin: 8, fontSize:"midium"}}
+              style={{width: "10%", margin: 8}}
               rows={1}
               onChange={(e)=> setValueKubun(e.target.value)}
             ></TextField>
             <TextField
               label="区分名称"
               defaultValue={changedValueKubunName}
-              style={{width: "20%",　margin: 8, fontSize:"midium"}}
+              style={{width: "20%", margin: 8}}
               rows={1}
               onChange={(e)=> setValueKubunName(e.target.value)}
             ></TextField>
             <TextField
                 label="コメント"
                 defaultValue={changedValueComment}
-                style={{width: "50%", margin: 8, fontSize:"midium"}}
+                style={{width: "50%", margin: 8}}
                 rows={1}
                 onChange={(e)=> setValueComment(e.target.value)}
             ></TextField>
           </div>
         </Typography>
-        <Grid container style={{fontSize:"midium"}} justify="flex-end" direction="row">
+        <Grid container style={{fontSize:"small"}} justify="flex-end" direction="row">
           <Grid item>
             <Button
-              style={{margin: "1.5em", fontSize:"midium"}}
+              style={{margin: "1.5em"}}
+              size="small"
               variant="contained"
               color="secondary"
               onClick={(e)=>onClick(true, e)}
               startIcon={<AddCircleIcon/>}
             >
-            登録
+            登録&nbsp;&nbsp;
             </Button>
             <Button
-              style={{margin: "1.5em", fontSize:"midium"}}
+              style={{margin: "1.5em"}}
+              size="small"
               variant="contained"
               color="secondary"
               onClick={(e)=>onClick(false, e)}

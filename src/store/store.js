@@ -10,6 +10,7 @@ const store = createStore (
 		loginReducer,
 		componentReducer
 	}),
+	window.REDUX_DEVTOOLS_EXTENSION && window.REDUX_DEVTOOLS_EXTENSION(),
 	applyMiddleware(
 		routerMiddleware(history)
 	)

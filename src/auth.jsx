@@ -1,7 +1,7 @@
 import React from "react";
-import store from "./store/store.js";
+import { connect } from 'react-redux';
 
-export default class Auth extends React.Component {
+class Auth extends React.Component {
     componentWillMount() {
         this.checkAuth();
     }
@@ -12,9 +12,9 @@ export default class Auth extends React.Component {
 
     // セッションnullの場合、ログイン画面へ遷移
     checkAuth() {
-        var list = store.getState();
-        if(list.loginReducer.status == 0 || list.loginReducer.status == -1) {
-            window.location.href = "/login";
+        var status = this.props.status;
+        if(status === 0 || status === -1) {
+            window.location.href = "/";
         }
     }
 
@@ -24,3 +24,16 @@ export default class Auth extends React.Component {
         );
     }
 }
+
+///////////////////////////////////////////////////////////////// 
+// ReactコンポーネントとReduxストアをコネクト
+const mapStateToProps = (state) => ({
+    status: state.loginReducer.status
+  });
+  
+  const ContainerAuth = connect(
+    mapStateToProps,
+    null
+  )(Auth);
+  
+  export default ContainerAuth;

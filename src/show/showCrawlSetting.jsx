@@ -5,16 +5,18 @@ import React from "react";
 import { Button, Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
 // コンテンツボックスに表示する記事データとクローリング情報のデータ
-import { Kbns, Crawlings } from './showContentsArea.jsx';
-import { Contents } from '../index.jsx';
+import { recentUpdateFileDate } from '../actions/contentsList.js';
+import { setUpdateCrawlingList, execCrawling, addNewCrawlingList } from '../actions/crawlingList.js';
 import CrawlSettingMaterialTable from '../materialTable/crawlSettingMaterialTable.jsx';
 import { KrawlSettingInModal, RegistKrawlSettingInModal } from './showModalWindow.jsx';
 import ModalWrapper from './showModalWindow.jsx';
 import cssFileControl from '../commonFunc.js';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { columnsData } from '../actions/materialTableColumns.js';
 import { cssFileAble, cssFileDisable } from '../commonFunc.js';
 import * as actions from "../actions/action.js"
+// アイコン
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 
 ///////////////////////////////////////////////////////////////// 
 // クローリング設定ページを生成する、ルートコンポーネント
@@ -23,14 +25,10 @@ export class ShowCrawlSetting extends React.Component {
   constructor (props){
     super(props);
     this.state = {
-      contents:this.props.thisContentsArticle,
-      selectedFileName:this.props.selectedFileName,
-      crawlings:Crawlings.getCrawlingList(),
       open:false,
       modalIndex:0,
       selectedItem:null,
       selectedCrawling:null,
-      status:this.props.status,
       recentFileUpdate:"未取得",
     }
   }
@@ -41,7 +39,7 @@ export class ShowCrawlSetting extends React.Component {
     // メイン画面のCSSファイル解除
     cssFileControl("App.css", "showCrawlSetting.css");
     // 最終クロール日時
-    Contents.recentUpdateFileDate(1, "mtime") // パラメータ:2は区分リスト
+    recentUpdateFileDate(1, "mtime") // パラメータ:2は区分リスト
     .then((response) => {
       if(response) {
         this.setState({recentFileUpdate:this.props.mtime});
@@ -59,13 +57,13 @@ export class ShowCrawlSetting extends React.Component {
   componentDidMount() {
     // ステータスの背景色指定
     var element = document.getElementById("p-status-data");
-    if(this.props.status == "停止") {
+    if(this.props.status === "停止") {
       element.style.backgroundColor = "#005FFF";
-    } else if(this.props.status == "実行中") {
+    } else if(this.props.status === "実行中") {
       element.style.backgroundColor = "#00FF3B";
-    } else if(this.props.status == "実行完了") {
+    } else if(this.props.status === "実行完了") {
       element.style.backgroundColor = "#FF4F02";
-    } else if(this.props.status == "エラー") {
+    } else if(this.props.status === "エラー") {
       element.style.backgroundColor = "#FF0000";
     }
   }
@@ -73,16 +71,8 @@ export class ShowCrawlSetting extends React.Component {
   ///////////////////////////////////////////////////////////////// 
   // 設定一覧で選択されたコンテンツデータを返す。
   setItem = (item) => {
-    var target = this.props.thisContentsArticle.findIndex((v) => v.kiziid === item.kiziid);
+    var target = this.props.thisContentsArticle.findIndex((v) => v.kbn === item.kbn && v.kiziid === item.kiziid);
     this.setState({selectedItem:this.props.thisContentsArticle[target]});
-
-  };
-
-  ///////////////////////////////////////////////////////////////// 
-  // 設定一覧で選択されたコンテンツのクローリング情報を返す。
-  setSelectedCrawling = (item) => {
-    var target = this.state.crawlings.crawling.findIndex((v) => v.kbn === item.kbn && v.jigyosyaid === item.jigyosyaid);
-    this.setState({selectedCrawling:this.state.crawlings.crawling[target]});
   };
 
   ///////////////////////////////////////////////////////////////// 
@@ -94,40 +84,21 @@ export class ShowCrawlSetting extends React.Component {
     changedCrawlingXpathTitle,
     changedValueCrawlingXpathLink,
     changedValueCrawlingXpathImage) => { 
-      Crawlings.setUpdateCrawlingList (
+      setUpdateCrawlingList (
         item,
         changedCrawlingUrl,
         changedCrawlingXpathTitle,
         changedValueCrawlingXpathLink,
         changedValueCrawlingXpathImage
       )
-      .then((response) => {
-        if (response.flag) {
-          var copyCrawlingList = Crawlings.getCrawlingList();
-          this.setState({crawlings:copyCrawlingList});
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
     }
 
   ///////////////////////////////////////////////////////////////// 
   // CrawlingList.jsのクローリング情報の新規登録処理を呼び出す。
   // jsonオブジェクトのデータも更新する。
   callNewCrawlingList = (item) => { 
-      Crawlings.addNewCrawlingList(item)
-      .then((response) => {
-        if (response.flag) {
-          // 既存の区分リストのthis.stateにセット
-          var copyCrawlingList = Crawlings.getCrawlingList();
-          this.setState({crawlings:copyCrawlingList});
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    }
+    addNewCrawlingList(item)
+  }
 
   ///////////////////////////////////////////////////////////////// 
   // モーダル表示・非表示の設定をフラグ管理する
@@ -149,24 +120,24 @@ export class ShowCrawlSetting extends React.Component {
     var element = document.getElementById("p-status-data");
     var status= this.props.status;
 
-    if(status == "停止" || status == "エラー" || status == "実行完了") {
+    if(status === "停止" || status === "エラー" || status === "実行完了") {
       this.props.setCrawlingStatus("実行中");
       cssFileAble("loading.css");
       element.style.backgroundColor = "#00FF3B";
       // クローリング実行処理呼び出し、実行結果取得
-      Crawlings.execCrawling()
+      execCrawling()
       .then((response) => {
         // 実行結果レスポンスが返却された場合、ステータスを「実行完了」に。ローディングCSSを無効に。
           this.props.setCrawlingStatus("実行完了");
           cssFileDisable("loading.css");
           element.style.backgroundColor = "#FF4F02";          
           // 最終クローリング日時を更新
-          Contents.recentUpdateFileDate(1, "mtime") // パラメータ:2は区分リスト
+          recentUpdateFileDate(1, "mtime") // パラメータ:2は区分リスト
           .then((response) => {
             if(response) {
               this.setState({recentFileUpdate:this.props.mtime});
               // コンテンツファイル名のリストを取得
-              Contents.recentUpdateFileDate(1, "list").then(() => {});
+              recentUpdateFileDate(1, "list").then(() => {});
             } else {
               this.setState({recentFileUpdate:"取得できませんでした"});
             }
@@ -209,7 +180,7 @@ export class ShowCrawlSetting extends React.Component {
           <RegistKrawlSettingInModal
             modalWrapperFlag={this.modalWrapperFlag}
             open={this.state.open}
-            kbns={Kbns.getKbnList()}
+            kbns={this.props.thisKubunList}
             setModalIndex={this.setModalIndex}
             callNewCrawlingList={this.callNewCrawlingList}
           />
@@ -224,6 +195,7 @@ export class ShowCrawlSetting extends React.Component {
             <Button
               id="button-krawlsetting"
               style={{margin:"0.5em", backgroundColor:"#1976d2", color:"#FFF"}}
+              size="small"
               variant="contained"
               onClick={()=>{
                 this.setModalIndex(1);
@@ -234,9 +206,10 @@ export class ShowCrawlSetting extends React.Component {
             <Button
               id="button-krawlsetting"
               style={{margin:"0.5em", backgroundColor:"#1976d2", color:"#FFF"}}
+              size="small"
               variant="contained"
               onClick={()=>this.execCrawling()}
-              startIcon={<AddCircleIcon/>}
+              startIcon={<ScreenSearchDesktopIcon/>}
             >すべて開始</Button>
           </Grid>
           <Grid Item id="crawl-status" xs={2} style={{padding: "0.5em", margin:"0.5em"}}>
@@ -252,13 +225,12 @@ export class ShowCrawlSetting extends React.Component {
         </Grid>
         {/* パラメータの数字1はクローリング設定画面を指す(他の画面と区別する為) */}
         <CrawlSettingMaterialTable
-          columns={columnsData(1)}
+          columns={columnsData(1)} 
           data={this.props.thisContentsArticle}
           actions={1}
           editable={1}
           modalWrapperFlag={this.modalWrapperFlag}
           setItem={this.setItem}
-          setSelectedCrawling={this.setSelectedCrawling}
         />
         <ModalWrapper
           modalWrapperFlag={this.modalWrapperFlag}
@@ -274,6 +246,8 @@ export class ShowCrawlSetting extends React.Component {
 // ReactコンポーネントとReduxストアをコネクト
 const mapStateToProps = (state) => ({
   thisContentsArticle: state.componentReducer.thisContents.article,
+  thisKubunList: state.componentReducer.thisKubunList.kbns,
+  thisCrawlingList: state.componentReducer.thisCrawlingList.crawling,
   selectedFileName: state.componentReducer.selectedFileName,
   status: state.componentReducer.status,
   mtime: state.componentReducer.mtime

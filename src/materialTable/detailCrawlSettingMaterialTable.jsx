@@ -3,8 +3,7 @@
 /////////////////////////////////////////////////////////////////
 import React, { forwardRef, useState } from "react";
 import MaterialTable from "material-table";
-import { Crawlings } from '../show/showContentsArea.jsx';
-
+import { setDeleteCrawlingList } from '../actions/crawlingList.js';
 // MaterialTableに使用するアイコンをインポート
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -65,19 +64,21 @@ export default function DetailCrawlSettingMaterialTable(props) {
         (oldData) =>
           new Promise((resolve,reject) => {
             var dataSet = {"delete":[]};
-            // setTimeout(() => {
-              const dataDelete = [...data];
-              const index = oldData.tableData.id;
-              // バックエンドに渡す為の削除対象データ
-              dataSet.delete.push(oldData);
-              dataDelete.splice(index, 1);
-              setData([...dataDelete]);
-              resolve(dataSet)
-            // }, 1000);
+            const dataDelete = [...data];
+            const index = oldData.tableData.id;
+            // バックエンドに渡す為の削除対象データ
+            dataSet.delete.push(oldData);
+            dataDelete.splice(index, 1);
+            setData([...dataDelete]);
+            resolve(dataSet)
           })
           .then((response) => {
-						Crawlings.setDeleteCrawlingList(response);
-            props.setStateCrawling();
+						setDeleteCrawlingList(response)
+            .then((response)=>{
+              if(response) {
+                props.setSelectedCrawling(oldData);  // クロール対象データセット更新
+              }
+            })  
           })
           .catch((error) => {
             console.error(error);

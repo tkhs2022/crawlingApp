@@ -9,7 +9,7 @@ import {DetailOriginal, DetailShow, DetailHide, DetailShowActiveSiteHedder} from
 import {SiteHedderActiveM} from './showContentsArea.jsx';
 // MoveBlockOnClick関数呼び出し時のパラメータに、自身の関数名を入れる。
 import {CaseA, CaseB} from './showContentsArea.jsx';
-import store from "../store/store.js";
+import { connect } from 'react-redux';
 import { cssFileAble, cssFileDisable } from '../commonFunc.js';
 ///////////////////////////////////////////////////////////////// 
 // コンテンツブロックをコントロール。コンテンツごとに記事を振り分け。(初回のみ)
@@ -28,20 +28,16 @@ export class ContentsBlockControl extends React.Component {
   }
 
   render() {
-    var contentesList = store.getState().componentReducer.thisContents;
     const Rows = 
-     contentesList != undefined &&
-      contentesList.article.map((Content, index) => {
+      this.props.thisContentsArticle !== undefined &&
+      this.props.thisContentsArticle.map((Content, index) => {
         return(
-          this.props.Kbn == Content.kbn &&
+          this.props.Kbn === Content.kbn &&
             <MediaCardForContentsBlock key={index} Content={Content}/>
         );
       });
     
     return(
-      // デフォルトでは区分1のコンテンツブロックを表示
-      this.props.Kbn == 1 ?
-        <div id ={this.props.Kbn} className={DetailShow}>{Rows}</div> :
         <div id ={this.props.Kbn} className={DetailOriginal}>{Rows}</div>
       );
   }
@@ -52,7 +48,7 @@ export class ContentsBlockControl extends React.Component {
 export const MoveBlockOnClick = (TargetKbn, Caller) => {
   var SiteHedderActive = SiteHedderActiveM.GetterSiteHedderActive();
   
-  if (TargetKbn == null && TargetKbn == undefined && Caller == CaseA) {
+  if (TargetKbn === null && TargetKbn === undefined && Caller === CaseA) {
     return;
   }
 
@@ -92,5 +88,19 @@ export const MoveBlockOnClick = (TargetKbn, Caller) => {
       }
   }
 };
+ 
+///////////////////////////////////////////////////////////////// 
+// ReactコンポーネントとReduxストアをコネクト
+const mapStateToProps = (state) => ({
+  thisContentsArticle: state.componentReducer.thisContents.article,
+  selectedFileName: state.componentReducer.selectedFileName,
+  status: state.componentReducer.status,
+  mtime: state.componentReducer.mtime
+});
 
-export default MoveBlockOnClick;
+const ContainerContentsBlockControl = connect(
+  mapStateToProps,
+  null
+)(ContentsBlockControl);
+
+export default ContainerContentsBlockControl;

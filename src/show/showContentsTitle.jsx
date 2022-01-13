@@ -35,7 +35,7 @@ export class ContentsTitleButtonWithBorder extends React.Component{
     // 前回クリックの有ったタイトルボタンの区分を取得。
     let click = PreClickM.GetterPreClick();
     // 前回ボタンクリックのあったコンテンツタイトルについて、下線が表示してあれば非表示
-    if (click != null && click != undefined && click != e) {
+    if (click !== undefined && click !== null && click !== e) {
       let ElementPreClick = document.getElementById("border-" + click);
       let CheckElementPreClick = ElementPreClick.getAttribute("class");
       switch (CheckElementPreClick) {
@@ -86,8 +86,7 @@ export class ContentsTitleButtonWithBorder extends React.Component{
             <DoubleArrowIcon title={this.props.name} style={{color:"#FFF"}}/>
           </Button>
         </div>
-        {// デフォルトでは区分1のコンテンツブロックを表示
-        this.props.Kbn == 1 ? <div id={"border-" + this.props.Kbn} className= {ContentTitleUnderBorderShow}/> : <div id={"border-" + this.props.Kbn} className= {ContentTitleUnderBorderOriginal}/>}
+        <div id={"border-" + this.props.Kbn} className= {ContentTitleUnderBorderOriginal}/>
       </div>
     );  
   }
@@ -97,12 +96,11 @@ export class ContentsTitleButtonWithBorder extends React.Component{
 // コンテンツタイトルブロック。タイトル毎にボタンを配置するコンポー
 // ネントを呼び出す。
 export const ContentsTitleBlock = (props) => {
-
-  const NaviBar = props.Kbns.kbns.map((Kbns,index) => {
+  const NaviBar = props.thisKubunList.map((Kbns,index) => {
     return (
       <Typography key={index} variant="h6" noWrap className="name-title">
         <label>{Kbns.kbnname}</label>
-        <ContentsTitleButtonWithBorder Kbn={Kbns.kbn} index={index}/>
+        <ContentsTitleButtonWithBorder Kbn={Kbns.kbn} thisKubunList={props.thisKubunList} index={index}/>
       </Typography>
     );
   });

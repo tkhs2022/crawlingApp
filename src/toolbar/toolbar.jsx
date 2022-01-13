@@ -17,13 +17,11 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { makeStyles } from "@material-ui/core/styles";
-import { Contents } from '../index.jsx';
-
-// ルーティングに使用するライブラリ
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import * as action from "../actions/action.js";
-import store from "../store/store.js";
+import { makeStyles } from "@material-ui/core/styles";
+import getContentsList from '../actions/contentsList.js';
+import * as actions from "../actions/action.js"
 
 const drawerWidth = 240;
 
@@ -46,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-export default function ResponsiveDrawer(props) {
+function ResponsiveDrawer(props) {
 	///////////////////////////////////////////////////////////////// 
 	// コンテンツメニューの開閉を制御する
 	const [selectedContentsIndex, setSelectedContentsIndex] = React.useState(0);
@@ -60,7 +58,7 @@ export default function ResponsiveDrawer(props) {
 	///////////////////////////////////////////////////////////////// 
 	// アイコンボタン押下時のメニュー開閉を制御する
 	const optionMenuIcon = [
-		"logout",
+		"ログアウト",
 	];
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
@@ -74,10 +72,10 @@ export default function ResponsiveDrawer(props) {
 		event.preventDefault();
 		setSelectedIconIndex(index);
 		setAnchorEl(null);
-		if(selectedIconIndex == 0) {
+		if(selectedIconIndex === 0) {
 			// ログアウト処理
-			store.dispatch(action.logout());
-			window.location.href = "/login";
+			props.LOGOUT();
+			window.location.href = "/";
 		}
 	};
 	// メニューを閉じるイベント処理
@@ -94,26 +92,44 @@ export default function ResponsiveDrawer(props) {
 	///////////////////////////////////////////////////////////////// 
 	// 選択されたコンテンツファイル名を返却
 	const callApp = (selectedFileName) => {
-		Contents.getContentsList(selectedFileName);
+		getContentsList(selectedFileName);
 	}
 
 	///////////////////////////////////////////////////////////////// 
 	// 左側のメニューバー
 	const drawer = (
 	<div>
-		<Toolbar/>
+		<Toolbar id="toolBar-loginInfo" style={{fontSize:"0.8rem"}}>
+			<p style={{marginTop: "0.5em", marginBottom: "0.5em"}}>ユーザー :  {props.user}</p>
+			<p style={{marginTop: "0.5em", marginBottom: "0.5em"}}>更新時刻 :  {new Date().toLocaleString()}</p>
+		</Toolbar>
 		<Divider/>
 		<List>
-			<Link to="/ShowCrawlSetting" style={{textDecoration: "none"}}>
-				<ListItem button selected={selectedContentsIndex === 30} onClick={(e) => handleListItemClick(30, e)}>
-					<ListItemText primary="実行結果セット" className="list-item-text" classes={{primary:styles.listItemText}}/>
-				</ListItem>
-	 		</Link>
+			{/* 区分セットページ */}
 			<Link to="/ShowKubunSetting" style={{textDecoration: "none"}}>
 				<ListItem button selected={selectedContentsIndex === 20}onClick={(e) => handleListItemClick(20, e)}>
 					<ListItemText primary="区分セット" className="list-item-text" classes={{primary:styles.listItemText}}/>
 				</ListItem>
 			</Link>
+			{/* 実行結果セットページ */}
+			<ListItem button>
+				<ListItemText primary="実行結果セット" className="list-item-text" classes={{primary:styles.listItemText}}/>
+				{opencontents 
+				? <ExpandLess onClick={handleClick} style={{color:"#FFF",marginRight: "1em"}}/>
+				: <ExpandMore onClick={handleClick} style={{color:"#FFF", marginRight: "1em"}}/>
+				}
+			</ListItem>
+			<Collapse in={opencontents} timeout="auto" unmountOnExit>
+				{props.fileNameList !== undefined &&
+					props.fileNameList.map((fileName, index) => (
+						<Link to="/ShowCrawlSetting" key={fileName} style={{textDecoration: "none"}}>
+							<ListItem button selected={selectedContentsIndex === fileName} onClick={(e) => {handleListItemClick(fileName, e); callApp(fileName, e)}}>
+								<ListItemText primary={fileName} className="list-item-text-contentsfile" classes={{primary:styles.listItemTextContentsfile}}/>
+							</ListItem>
+						</Link>
+				))}
+			</Collapse>
+			{/* コンテンツ表示ページ */}
 			<ListItem button>
 				<ListItemText primary="コンテンツ" onClick={handleClick} className="list-item-text" classes={{primary:styles.listItemText}}/>
 				{opencontents 
@@ -121,10 +137,9 @@ export default function ResponsiveDrawer(props) {
 				: <ExpandMore onClick={handleClick} style={{color:"#FFF", marginRight: "1em"}}/>
 				}
 			</ListItem>
-			{/* コンテンツ選択部分 */}
 			<Collapse in={opencontents} timeout="auto" unmountOnExit>
-				{store.getState().componentReducer.fileNameList != undefined &&
-					store.getState().componentReducer.fileNameList.map((fileName, index) => (
+				{props.fileNameList !== undefined &&
+					props.fileNameList.map((fileName, index) => (
 						<Link to="/ShowContentsArea" key={fileName} style={{textDecoration: "none"}}>
 							<ListItem button selected={selectedContentsIndex === fileName} onClick={(e) => {handleListItemClick(fileName, e); callApp(fileName, e)}}>
 								<ListItemText primary={fileName} className="list-item-text-contentsfile" classes={{primary:styles.listItemTextContentsfile}}/>
@@ -146,7 +161,7 @@ export default function ResponsiveDrawer(props) {
 				<Typography className="toolbarTypography"variant="h6" noWrap component="div" style={{fontSize:"16pt!important"}}>Site Checker...</Typography>
 				<IconButton
 					color="inherit"
-					aria-label="opencontents drawer"
+					aria-label="opencontentsDrawer"
 					onClick={onClickIconButton}
 					edge="start"
 					// sx={{marginRight: '36px', ...(opencontents && { display: 'none' })}}
@@ -168,6 +183,7 @@ export default function ResponsiveDrawer(props) {
 					{optionMenuIcon.map((option, index) => (
 						<MenuItem
 							key={option}
+							size="small"
 							// disabled={index === 0}
 							// selected={index === selectedIconIndex}
 							// onClick={(e) => onClickSelectedIcon(e, index)}
@@ -181,7 +197,7 @@ export default function ResponsiveDrawer(props) {
 			</AppBar>
 			{/* 左側のメニューバー表示 */}
 			<Box component="nav" sx={{width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
-				{/* 左側のメニューバー表示(中身) */}
+				{/* 左側のメニューバー表示(中身) */}			
 				<Drawer	variant="permanent"	sx={{display: {xs: 'none', sm: 'block' },	'& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },}} opencontents>
 					{drawer}
 				</Drawer>
@@ -189,3 +205,21 @@ export default function ResponsiveDrawer(props) {
 		</Box>
 	);
 }
+
+///////////////////////////////////////////////////////////////// 
+// ReactコンポーネントとReduxストアをコネクト
+const mapStateToProps = (state) => ({
+	fileNameList: state.componentReducer.fileNameList,
+	user: state.loginReducer.user
+  });
+
+const mapDispatchToProps = (dispatch) => ({
+	LOGOUT: () => dispatch(actions.LOGOUT())
+});
+
+const ContainerResponsiveDrawer = connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ResponsiveDrawer);
+
+export default ContainerResponsiveDrawer;

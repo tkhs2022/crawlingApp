@@ -2,12 +2,9 @@
 // メインブロッククラス
 import React from "react";
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router';
-import {ContentsBlockControl} from './showContentsBlock.jsx';
+import ContainerContentsBlockControl from './showContentsBlock.jsx';
 import {ContentsTitleBlock} from './showContentsTitle.jsx';
 // import {OnHedderBox} from './show/showOnHedderBox.jsx';
-import {KbnList} from '../actions/kubunList.js';
-import {CrawlingList} from '../actions/crawlingList.js';
 import cssFileControl from '../commonFunc.js';
 
 ///////////////////////////////////////////////////////////////// 
@@ -117,9 +114,6 @@ export class SiteHedderActiveMortion {
 // インスタンス生成エリア
   export const SiteHedderActiveM = new SiteHedderActiveMortion(SiteHedderActiveMortion);
   export const PreClickM = new PreClickMortion(PreClickMortion);
-  // export const Contents = new ContentsList(ContentsList);  index.jsxへ移行。
-  export const Crawlings = new CrawlingList(CrawlingList);
-  export const Kbns = new KbnList(KbnList);
 
 ///////////////////////////////////////////////////////////////// 
 // メインブロックをコントロール。
@@ -129,11 +123,12 @@ export class MainBlockControl extends React.Component {
   }
 
   render() {
-    const ContentsRows = this.props.Kbns.kbns.map((List, index) => {
+    const ContentsRows = this.props.thisKubunList.map((List, index) => {
       return(
-        <ContentsBlockControl key={index} Kbn ={List.kbn}/>
+        <ContainerContentsBlockControl key={index} Kbn ={List.kbn}/>
       );    
     });
+
     return(
       <div className="mainBlockControl">
         <div>{ContentsRows}</div>
@@ -147,7 +142,6 @@ export class MainBlockControl extends React.Component {
 export class ShowContentsArea extends React.Component{
   constructor(props) {
     super(props);
-    this.KbnList = Kbns.getKbnList();
     this.state = {
       mount:false,
     }
@@ -166,10 +160,21 @@ export class ShowContentsArea extends React.Component{
     return (
       <div>
         {/* <OnHedderBox HedderMortionAcive = {(e)=>this.HedderMortionAcive(this.state.mount, e)} mount = {this.state.mount}/> */}
-        <ContentsTitleBlock Kbns = {this.KbnList} mount = {this.state.mount}/>
-        <MainBlockControl Kbns = {this.KbnList} mount = {this.state.mount}/>
+        <ContentsTitleBlock thisKubunList = {this.props.thisKubunList} mount = {this.state.mount}/>
+        <MainBlockControl thisKubunList = {this.props.thisKubunList} mount = {this.state.mount}/>
       </div>
     );
   }
 }
-export default connect(null, { push })(ShowContentsArea);
+///////////////////////////////////////////////////////////////// 
+// ReactコンポーネントとReduxストアをコネクト
+const mapStateToProps = (state) => ({
+	thisKubunList: state.componentReducer.thisKubunList.kbns
+});
+
+const ContainerShowContentsArea = connect(
+	mapStateToProps,
+	null
+)(ShowContentsArea);
+
+export default ContainerShowContentsArea;

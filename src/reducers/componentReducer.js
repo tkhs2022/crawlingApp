@@ -1,17 +1,16 @@
 ////////////////////////////////////////////////////
 // レデューサー
 ////////////////////////////////////////////////////
-import { push } from 'connected-react-router';
-
 ////////////////////////////////////////////////////
 // コンポーネントのstate
-export const dumb = (state = {}) => state;
 export const initialState = {
-	fileNameList:[],
-	selectedFileName:"contents.json",
+	fileNameList:["contents"],
+	selectedFileName:"contents",	// 拡張子は付けない。バックエンドで操作しているため。
 	thisContents:null,
 	mtime:"未取得",
-	status:"停止"
+	status:"停止",
+	thisKubunList:null,
+	thisCrawlingList:null
 };
 
 export const componentReducer = (state = initialState, action) => {
@@ -43,10 +42,21 @@ export const componentReducer = (state = initialState, action) => {
 				status:action.status,
 			}
 
+		case "SET_KUBUN_LIST":
+			return {
+				...state,
+				thisKubunList:action.kubunList
+			}
+
+		case "SET_CRAWLING_LIST":
+			return {
+				...state,
+				thisCrawlingList:action.crawlingList
+			}
+
 		default:
 			return state;
 	}
 };
-
 
 export default componentReducer;

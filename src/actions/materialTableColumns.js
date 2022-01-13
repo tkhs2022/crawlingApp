@@ -33,11 +33,17 @@ const columnsDetailCrawlSetting =
 export const columnsData = (param) => {
     switch(param) {
         case 1:
+            console.log("columnsCrawlSetting: " + param);
             return columnsCrawlSetting;
         case 2:
+            console.log("columnsCrawlSetting: " + param);
             return columnsKubunSetting;
         case 3:
+            console.log("columnsCrawlSetting: " + param);
             return columnsDetailCrawlSetting;
+        default:
+            console.log("columnsCrawlSetting default: " + param);
+            return columnsCrawlSetting;
     }
 };
 
