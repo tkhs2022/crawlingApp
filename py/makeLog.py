@@ -8,7 +8,7 @@ from logging import getLogger, FileHandler
 import traceback
 
 format_date1 = '{0:%Y%m%d}'.format(datetime.datetime.now())
-logPath = './log/'
+logPath = './log/py/'
 APLinfoLogName = 'APLinfo_' + format_date1 + '.log'
 ERRORLogName = 'ERROR_' + format_date1 + '.log'
 
