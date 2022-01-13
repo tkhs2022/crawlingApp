@@ -269,7 +269,7 @@ app.post("/py", (req, res) => {
     var obj = {flag:false, msg:"nothing"}
 	return new Promise(function(resolve, reject) {
 		var url = location.href;
-		var env_py = anacondaPath;
+		var env_py = "python";
 		if(url === heroku_domain) {
 			console.log(env_py);
 		}
