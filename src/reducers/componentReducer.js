@@ -35,8 +35,6 @@ export const componentReducer = (state = initialState, action) => {
 			}
 
 		case "SET_CRAWLING_STATUS":
-			console.log(new Date() + "componentReduser.SET_CRAWLING_STATUS called.");
-			console.log(action.status);
 			return {
 				...state,
 				status:action.status,

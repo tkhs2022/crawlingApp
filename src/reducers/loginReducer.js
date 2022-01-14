@@ -20,7 +20,6 @@ export const loginReducer = (state = initialState, action) => {
         case "LOGIN_RECEIVE_FAILED":
             return { ...state, session:false, status:-1}
         case "LOGOUT":
-            console.log("loginReducer called. at case LOGOUT.");
             return { ...state, session:false, status:0}    
         default:
             return state;

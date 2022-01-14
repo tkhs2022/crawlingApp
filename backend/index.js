@@ -10,7 +10,6 @@ const kubunListJsonPath = setting["kubunListPath"];
 const contentsListJsonPath = setting["contentsPath"];
 const crawlingListJsonPath = setting["crawlingListPath"];
 const reactLogPath = setting["reactLogPath"]
-const anacondaPath = setting["anacondaPath"]
 const pyPath = setting["pyPath"];
 const allowCrossDomain = function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -266,14 +265,11 @@ app.post("/setDeleteCrawlingList", (req, res) => {
 app.post("/py", (req, res) => {
 	var nowDate = new Date();
 	var resJsonFileName = req.body.fileName;
-    var obj = {flag:false, msg:"nothing"}
+	var obj = {flag:false, msg:"nothing"}
+	var pythonPath = __dirname.replace("backend","py\\env_v3.8.12\\Scripts");
+
 	return new Promise(function(resolve, reject) {
-		var url = location.href;
-		var env_py = "python";
-		if(url === heroku_domain) {
-			console.log(env_py);
-		}
-		execScript.execScript(env_py + "/python.exe", pyPath + "/connect.py", resJsonFileName)
+		execScript.execScript(pythonPath + "\\python.exe", pyPath + "/connect.py", resJsonFileName)
 		.then(function(reponse) {
 			obj["flag"] = reponse["flag"];
 			obj["msg"] = reponse["msg"];

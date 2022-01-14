@@ -1,8 +1,4 @@
 {
-    "localhost_3000":"http://localhost:3000/",
-    "localhost_3001":"http://localhost:3001/",
-    "heroku_domain":"https://mysterious-brushlands-19415.herokuapp.com/",
-    "anacondaPath":"C:/Users/waard/anaconda3",
     "pyPath":"./py",
     "contentsPath":"./backend/data/contents",
     "crawlingListPath":"./backend/data/crawling",

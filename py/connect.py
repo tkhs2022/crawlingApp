@@ -12,7 +12,6 @@ import sys
 import socket
 import inspect
 import traceback
-import datetime
 import makeLog	#ログ出力クラス
 
 ############################################################
@@ -525,6 +524,6 @@ def main():
 if __name__ == '__main__':
 	#スクリプト実行で本プログラムを起動した際にファイル名をパラメータから取得。tragetJsonNameへセット。
 	#sys.argvの0番目は起動したプログラム名。1番目はパラメータ。
-	# tragetJsonName = sys.argv[1]
-	tragetJsonName = 'crawlingList.json'
+	tragetJsonName = sys.argv[1]
+	# tragetJsonName = 'crawlingList.json'
 	main()

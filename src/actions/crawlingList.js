@@ -215,6 +215,7 @@ export function setDeleteCrawlingList(props){
 // クローリングプログラム実行関数
 export function execCrawling() {
 	return new Promise((resolve, reject) => {
+		console.log(window.location.href);
 		// fetch処理
 		fetch("/py", {
 			method: "POST",
@@ -225,6 +226,7 @@ export function execCrawling() {
 			},
 			body: JSON.stringify({
 				fileName:CrawlingListJsonFileName,
+				url:window.location.href
 			})
 		})
 		.then((response) => {
