@@ -266,10 +266,11 @@ app.post("/py", (req, res) => {
 	var nowDate = new Date();
 	var resJsonFileName = req.body.fileName;
 	var obj = {flag:false, msg:"nothing"}
-	var pythonPath = __dirname.replace("backend","py\\env_v3.8.12\\Scripts");
+	var pythonPath = __dirname.replace("backend","py/env_v3.8.12/Scripts");
+	pythonPath = pythonPath.replace(/\\/g, "/");
 
 	return new Promise(function(resolve, reject) {
-		execScript.execScript(pythonPath + "\\python.exe", pyPath + "/connect.py", resJsonFileName)
+		execScript.execScript(pythonPath + "/python.exe", pyPath + "/connect.py", resJsonFileName)
 		.then(function(reponse) {
 			obj["flag"] = reponse["flag"];
 			obj["msg"] = reponse["msg"];
