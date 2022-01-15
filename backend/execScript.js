@@ -7,21 +7,19 @@ function execScript(exeName, pgName, filaName) {
 
     return new Promise(function(resolve, reject){
         console.log(new Date().toLocaleString('ja-JP') + " <function>execScript python.exe launched. connect.py is Launched. crawl starting...");
-        console.log("crawling cancelled...");
-        resolve(result);
-        // exec(cmd_str,(err, stdout, stderr) => {
-        //     if(err) {
-        //         console.error(new Date().toLocaleString('ja-JP') + " <function>execScript catched stderr: ");
-        //         console.error(stderr);
-        //         result["msg"] = stderr;
-        //         reject(result);
-        //     } else {
-        //         console.log(stdout);    //pythonプログラム実行中にコンソール出力している文字列を出力
-        //         console.log(new Date().toLocaleString('ja-JP') + " crawling API Finished!!");
-        //         result["flag"] = true;
-        //         resolve(result);
-        //     }
-        // });
+        exec(cmd_str,(err, stdout, stderr) => {
+            if(err) {
+                console.error(new Date().toLocaleString('ja-JP') + " <function>execScript catched stderr: ");
+                console.error(stderr);
+                result["msg"] = stderr;
+                reject(result);
+            } else {
+                console.log(stdout);    //pythonプログラム実行中にコンソール出力している文字列を出力
+                console.log(new Date().toLocaleString('ja-JP') + " crawling API Finished!!");
+                result["flag"] = true;
+                resolve(result);
+            }
+        });
     });
 };
 

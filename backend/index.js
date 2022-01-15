@@ -269,54 +269,6 @@ app.post("/py", (req, res) => {
 	var pythonPath = __dirname.replace("backend","py/env_v3.8.12/Scripts");
 	pythonPath = pythonPath.replace(/\\/g, "/");
 	pythonPath = pythonPath + "/python.exe";
-	var dirname = path.dirname(pythonPath);
-	fs.access(dirname, fs.constants.F_OK, (error) => {
-		if(error) {
-			if (error.code === "ENOENT") {
-				console.log("F_OK ENOENT.");				
-			} else {
-				console.log("F_OK else error.");
-			}
-		} else {
-			console.log("F_OK OK.");
-		}
-	});
-
-	fs.access(dirname, fs.constants.R_OK, (error) => {
-		if(error) {
-			if (error.code === "ENOENT") {
-				console.log("R_OK ENOENT.");				
-			} else {
-				console.log("R_OK else error.");
-			}
-		} else {
-			console.log("R_OK OK.");
-		}
-	});
-
-	fs.access(dirname, fs.constants.W_OK, (error) => {
-		if(error) {
-			if (error.code === "ENOENT") {
-				console.log("W_OK ENOENT.");				
-			} else {
-				console.log("W_OK else error.");
-			}
-		} else {
-			console.log("W_OK OK.");
-		}
-	});
-
-	fs.access(dirname, fs.constants.X_OK, (error) => {
-		if(error) {
-			if (error.code === "ENOENT") {
-				console.log("X_OK ENOENT.");				
-			} else {
-				console.log("X_OK else error.");
-			}
-		} else {
-			console.log("X_OK OK.");
-		}
-	});
 
 	return new Promise(function(resolve, reject) {
 		execScript.execScript(pythonPath, pyPath + "/connect.py", resJsonFileName)
