@@ -272,7 +272,7 @@ app.post("/py", (req, res) => {
 
 	return new Promise(function(resolve, reject) {
 		// execScript.execScript(pythonPath, pyPath + "/connect.py", resJsonFileName)
-		execScript.execScript("heroku run python"+ pyPath + "/connect.py", resJsonFileName)
+		execScript.execScript("python"+ pyPath + "/connect.py", resJsonFileName)
 		.then(function(reponse) {
 			obj["flag"] = reponse["flag"];
 			obj["msg"] = reponse["msg"];
