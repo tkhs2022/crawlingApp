@@ -21,9 +21,8 @@ app.use(allowCrossDomain);
 app.use(express.urlencoded({extended: true}));
 app.use(express.json({type: ['application/json', 'text/plain']}));
 app.use(express.static(path.join(__dirname, '../build')));	// ビルドしたreactと連携
-app.listen(port, () => {
-  console.log(`listening on *:${port}`);
-});
+var app_server = app.listen(port, () => {console.log(`listening on *:${port}`);});
+app_server.timeout = 1000 * 60 * 3	// タイムアウトを3分に設定
 
 ///////////////////////////////////////////////////////////////// 
 // ログ出力処理
