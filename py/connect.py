@@ -9,6 +9,7 @@ import time
 import datetime
 import json
 import sys
+from sys import stdin
 import socket
 import inspect
 import traceback
@@ -483,6 +484,7 @@ def fileExistsCheck(json_name):
 #メイン関数
 ############################################################
 def main():
+	tragetJsonName = 'crawlingList.json'
 	#パラメータのファイル存在確認
 	res = fileExistsCheck(tragetJsonName)
 	#ファイルが存在しなかった場合
@@ -522,8 +524,10 @@ def main():
 #メインメソッド
 ############################################################
 if __name__ == '__main__':
-	#スクリプト実行で本プログラムを起動した際にファイル名をパラメータから取得。tragetJsonNameへセット。
-	#sys.argvの0番目は起動したプログラム名。1番目はパラメータ。
+	# スクリプト実行で本プログラムを起動した際にファイル名をパラメータから取得。tragetJsonNameへセット。
+	# 1.パラメータを参照し実行するパターン。sys.argvの0番目は起動したプログラム名。1番目はパラメータ。
 	tragetJsonName = sys.argv[1]
+	# 2.直接ファイル名を実行するパターン。
 	# tragetJsonName = 'crawlingList.json'
+	# tragetJsonName = stdin.readlines()
 	main()

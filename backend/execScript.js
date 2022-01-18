@@ -1,11 +1,11 @@
 const {exec} = require("child_process");
 
-function execScript(exeName, pgName, filaName) {
-    var cmd_str = exeName + " " + pgName + " " + filaName
+function execScript(exeName, pgName, resJsonFileName) {
+    var cmd_str = exeName + " " + pgName + " " + resJsonFileName
     var result = {flag:false, msg:"nothing"}
     process.on('unhandledRejection', console.dir);
 
-    return new Promise(function(resolve, reject){
+    return new Promise(function(resolve, reject) {
         console.log(new Date().toLocaleString('ja-JP') + " <function>execScript python.exe launched. connect.py is Launched. crawl starting...");
         exec(cmd_str,(err, stdout, stderr) => {
             if(err) {

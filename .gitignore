@@ -1,7 +1,11 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/py/__pycache__
+/py/env_v3.8.12
+/py/log
 /node_modules
+/log
 /.pnp
 .pnp.js
 
