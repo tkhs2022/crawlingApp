@@ -309,7 +309,7 @@ app.post("/py", (req, res) => {
 	var resJsonFileName = req.body.fileName;
 	var obj = {flag:true, msg:"nothing"}
 		try {
-			var result = execScript.execScript("python", pyPath + "/connect.py", resJsonFileName)
+			var result = execScript.execScript("python", pyPath + "/connect.py", resJsonFileName, port)
 			console.log(result)
 			execScript_flag = 0;
 		} catch(error) {

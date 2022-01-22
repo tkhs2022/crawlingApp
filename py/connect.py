@@ -39,7 +39,8 @@ lengthHttp = 7
 log = makeLog.Log()
 
 # クロール実行完了の通知をAPIへHTTPリクエスト
-backendUrl = 'http://localhost:3001/updateFromPy'
+port = sys.argv[2]
+backendUrl = 'https://mysterious-brushlands-19415.herokuapp.com:' + port + '/updateFromPy'
 
 ############################################################
 #jsonファイルを読み込み、オブジェクトを返却する関数
