@@ -1,29 +1,64 @@
-const port = process.env.PORT || 3001
-const express = require('express');
-const path = require('path');
-const app = express();
 const fs = require('fs');
+const path = require('path');
+
+// クローリング実行プログラム
 const execScript = require("./execScript.js");
-const setting = require("./setting.json");
+// クローリング実行ステータスフラグ 99:停止,0:実行中,1:完了,-1:エラー
+var execScript_flag = 99;
+
 // クローリング、コンテンツリスト、区分データのディレクトリ
+const setting = require("./setting.json");
 const kubunListJsonPath = setting["kubunListPath"];
 const contentsListJsonPath = setting["contentsPath"];
 const crawlingListJsonPath = setting["crawlingListPath"];
 const reactLogPath = setting["reactLogPath"]
 const pyPath = setting["pyPath"];
+
+
+///////////////////////////////////////////////////////////////// 
+// サーバー設定 
+const port = process.env.PORT || 3001
+const express = require('express');
+const app = express();
+const server = require("http").createServer(app);
+
+// 異なるオリジン間アクセス設定
 const allowCrossDomain = function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "X-Requested-With, Origin, X-HTTP-Method-Override,Content-Type, Accept");
 	res.header("Access-Control-Allow-Methods", "POST, PUT, DELETE, OPTIONS");
 	next();
 }
-app.use(allowCrossDomain);
+// 別オリジンからのアクセスを許可
+app.use(allowCrossDomain);	
+// リクエストボディを解析するパーサー。POSTリクエストを受けたときに必須。
 app.use(express.urlencoded({extended: true}));
-app.use(express.json({type: ['application/json', 'text/plain']}));
-app.use(express.static(path.join(__dirname, '../build')));	// ビルドしたreactと連携
-var app_server = app.listen(port, () => {console.log(`listening on *:${port}`);});
-app_server.timeout = 1000 * 60 * 3	// タイムアウトを3分に設定
+// httpリクエストのデータタイプ
+app.use(express.json({type: ['application/json', 'text/plain']}));	
+// ビルドしたreactと連携
+app.use(express.static(path.join(__dirname, '../build')));
 
+// サーバーオブジェクトsocketioを作成する
+const { Server } = require("socket.io");
+// corsモジュールでは上手くCORSできないため、Server作成時の引数にオプションを追加する
+const io = new Server(server, {
+    cors: {                      
+        origin: "*",
+        methods: ["GET", "POST"],
+    },
+});
+// ブラウザから接続を受ける
+io.on("connection", (socket) => {
+    console.log(new Date().toLocaleString('ja-JP') + " " + "a user connected");
+	// クローリングプログラムの実行ステータスを送信
+	socket.emit('info', execScript_flag);
+    socket.on("disconnect", () => {console.log(new Date().toLocaleString('ja-JP') + " " + "user disconnected");});
+});
+
+// serverをPORT3000で待ち受ける。app.listenだとNG。
+server.listen(port);
+console.log(new Date().toLocaleString('ja-JP') + " " + `Web server is on. PortNumber is ${port}.`);
+///////////////////////////////////////////////////////////////// 
 ///////////////////////////////////////////////////////////////// 
 // ログ出力処理
 app.post("/logging", (req, res) => {
@@ -260,31 +295,29 @@ app.post("/setDeleteCrawlingList", (req, res) => {
 });
 
 ///////////////////////////////////////////////////////////////// 
+// クローリングプログラム完了通知
+app.get("/updateFromPy", (req, res) => {
+	// クローリング実行ステータスフラグを1にする
+	execScript_flag = 1;
+	console.log(new Date().toLocaleString('ja-JP') + " " + "index.js <function>app.post /updateFromPy")
+	res.json({"message":"this is the comp info from API on Express. thank's for your mission!!"});
+});
+
+///////////////////////////////////////////////////////////////// 
 // クローリング実行
 app.post("/py", (req, res) => {
-	var nowDate = new Date();
 	var resJsonFileName = req.body.fileName;
-	var obj = {flag:false, msg:"nothing"}
-	return new Promise(function(resolve, reject) {
-		execScript.execScript("python", pyPath + "/connect.py", resJsonFileName)
-		.then(function(reponse) {
-			obj["flag"] = reponse["flag"];
-			obj["msg"] = reponse["msg"];
-			if(obj["flag"]) {
-				resolve(obj);
-			} else if(!obj["flag"]) {
-				reject(obj);
-			}
-			return res.json(obj);
-		})
-		.catch((error) => {
-			console.log(nowDate.toLocaleString('ja-JP') + " " + "/py post response catched error: ");
+	var obj = {flag:true, msg:"nothing"}
+		try {
+			var result = execScript.execScript("python", pyPath + "/connect.py", resJsonFileName)
+			console.log(result)
+			execScript_flag = 0;
+		} catch(error) {
 			console.error(error);
-			obj["msg"] = error;
-			reject(obj);
-			return res.json(obj);
-		});
-	});
+			result["flag"] = false;
+			execScript_flag = -1;
+		}
+		res.json(obj);
 });
 
 ///////////////////////////////////////////////////////////////// 

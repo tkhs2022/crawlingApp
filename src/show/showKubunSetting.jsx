@@ -12,35 +12,36 @@ import KubunSettingMaterialTable from '../materialTable/kubunSettingMaterialTabl
 import { KubunSettingInModal, ShortKrawlSettingInModal, RegistKrawlSettingInModal } from './showModalWindow.jsx';
 import ModalWrapper from './showModalWindow.jsx';
 import cssFileControl from '../commonFunc.js';
-import { cssFileDisable } from '../commonFunc.js';
 import { columnsData } from '../actions/materialTableColumns';
 import { connect } from 'react-redux';
+import * as actions from "../actions/action.js"
 // アイコン
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 ///////////////////////////////////////////////////////////////// 
 // 区分設定ページを生成する、ルートコンポーネント
 ///////////////////////////////////////////////////////////////// 
 class ShowKubunSetting extends React.Component {
-  constructor (props){
+  constructor (props) {
     super(props);
     this.state = {
       kbns:this.props.thisKubunList,
-      selectedCrawling:null,
+      selectedCrawling:[],
       selectedItem:null,
       open:false,
       modalIndex:0,
       recentFileUpdate:"未取得",
     }
-  }
-
-  ///////////////////////////////////////////////////////////////// 
-  // componentWillMount()
-  componentWillMount() {
     // メイン画面のCSSファイル解除
     cssFileControl("App.css", "showCrawlSetting.css");
-    cssFileDisable("loading.css");
+    // 区分セットの最終更新日時を取得
     this.recentKubunUpdateDate();
-    this.setState({selectedCrawling:[]})
+    // クローリングステータスの状態更新をストップさせる
+    console.log("in showKubunSetting.jsx");
+    console.log(this.props.thisIntervalId);
+    if (this.props.thisIntervalId != 0) {
+      clearInterval(this.props.thisIntervalId);
+      this.props.set_sokcet_intervalID(0);
+    }
   }
 
   ///////////////////////////////////////////////////////////////// 
@@ -288,12 +289,18 @@ class ShowKubunSetting extends React.Component {
 // ReactコンポーネントとReduxストアをコネクト
 const mapStateToProps = (state) => ({
 	thisKubunList: state.componentReducer.thisKubunList.kbns,
-  thisCrawlingList: state.componentReducer.thisCrawlingList.crawling
+  thisCrawlingList: state.componentReducer.thisCrawlingList.crawling,
+  status: state.loginReducer.status,
+  thisIntervalId: state.componentReducer.thisIntervalId
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  set_sokcet_intervalID: int => dispatch(actions.SET_SOCKET_INTERVALID(int))
 });
 
 const ContainerShowKubunSetting = connect(
 	mapStateToProps,
-	null
+	mapDispatchToProps
 )(ShowKubunSetting);
 
 export default ContainerShowKubunSetting;

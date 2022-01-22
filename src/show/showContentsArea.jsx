@@ -6,6 +6,7 @@ import ContainerContentsBlockControl from './showContentsBlock.jsx';
 import {ContentsTitleBlock} from './showContentsTitle.jsx';
 // import {OnHedderBox} from './show/showOnHedderBox.jsx';
 import cssFileControl from '../commonFunc.js';
+import * as actions from "../actions/action.js"
 
 ///////////////////////////////////////////////////////////////// 
 // 定数定義エリア
@@ -145,11 +146,13 @@ export class ShowContentsArea extends React.Component{
     this.state = {
       mount:false,
     }
-  }
-
-  componentWillMount() {
     // メイン画面のCSSファイル解除
     cssFileControl("showCrawlSetting.css", "App.css");
+    // クローリングステータスの状態更新をストップさせる
+    if (this.props.thisIntervalId != 0) {
+      clearInterval(this.props.thisIntervalId);
+      this.props.set_sokcet_intervalID(0);
+    }
   }
 
   // HedderMortionAcive(){
@@ -169,12 +172,18 @@ export class ShowContentsArea extends React.Component{
 ///////////////////////////////////////////////////////////////// 
 // ReactコンポーネントとReduxストアをコネクト
 const mapStateToProps = (state) => ({
-	thisKubunList: state.componentReducer.thisKubunList.kbns
+	thisKubunList: state.componentReducer.thisKubunList.kbns,
+  status: state.loginReducer.status,
+  thisIntervalId: state.componentReducer.thisIntervalId
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  set_sokcet_intervalID: int => dispatch(actions.SET_SOCKET_INTERVALID(int)),
 });
 
 const ContainerShowContentsArea = connect(
 	mapStateToProps,
-	null
+	mapDispatchToProps
 )(ShowContentsArea);
 
 export default ContainerShowContentsArea;

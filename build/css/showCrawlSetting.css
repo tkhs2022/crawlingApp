@@ -36,7 +36,7 @@ input {
 /*クローリング設定画面。最終クロール日時と状態の欄の位置*/
 /*区分設定画面。最終更新日時の欄の位置*/
 div.MuiGrid-root.MuiGrid-grid-xs-2 {
-  right: -35rem;
+  right: -27rem;
   top: 3rem;
   position: relative; 
   display: flex;

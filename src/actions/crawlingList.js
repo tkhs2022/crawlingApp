@@ -215,9 +215,9 @@ export function setDeleteCrawlingList(props){
 // クローリングプログラム実行関数
 export function execCrawling() {
 	return new Promise((resolve, reject) => {
-		console.log(window.location.href);
 		// fetch処理
 		fetch("/py", {
+			// fetch("/test", {
 			method: "POST",
 			mode: "no-cors",
 			heders: {
@@ -230,8 +230,12 @@ export function execCrawling() {
 			})
 		})
 		.then((response) => {
+			console.log(response)
 			if(response.ok) {
 				return response.json();
+			} else {
+				let responseJson = {"flag":false};
+				reject(responseJson.flag);
 			}
 		})
 		.then(function(responseJson) {

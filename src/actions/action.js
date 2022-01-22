@@ -92,7 +92,8 @@ export const ActionType2 = {
 	SET_SELECTED_FILENAME:"SET_SELECTED_FILENAME",
     SET_CRAWLING_STATUS:"SET_CRAWLING_STATUS",
     SET_KUBUN_LIST:"SET_KUBUN_LIST",
-    SET_CRAWLING_LIST:"SET_CRAWLING_LIST"
+    SET_CRAWLING_LIST:"SET_CRAWLING_LIST",
+    SET_SOCKET_INTERVALID:"SET_SOCKET_INTERVALID"
 }
 
 // コンテンツファイルリストを返却
@@ -138,6 +139,13 @@ export const SET_CRAWLING_LIST = (nowCrawlingList) => {
     return {
         type:ActionType2.SET_CRAWLING_LIST,
         crawlingList:nowCrawlingList
+    }
+}
+
+export const SET_SOCKET_INTERVALID = (nowIntervalId) => {
+    return {
+        type:ActionType2.SET_SOCKET_INTERVALID,
+        intervalId:nowIntervalId
     }
 }
 

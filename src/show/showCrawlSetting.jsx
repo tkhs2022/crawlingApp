@@ -4,6 +4,7 @@
 import React from "react";
 import { Button, Grid } from "@material-ui/core";
 import { connect } from 'react-redux';
+import { io } from "socket.io-client";
 // コンテンツボックスに表示する記事データとクローリング情報のデータ
 import { recentUpdateFileDate } from '../actions/contentsList.js';
 import { setUpdateCrawlingList, execCrawling, addNewCrawlingList } from '../actions/crawlingList.js';
@@ -12,7 +13,6 @@ import { KrawlSettingInModal, RegistKrawlSettingInModal } from './showModalWindo
 import ModalWrapper from './showModalWindow.jsx';
 import cssFileControl from '../commonFunc.js';
 import { columnsData } from '../actions/materialTableColumns.js';
-import { cssFileAble, cssFileDisable } from '../commonFunc.js';
 import * as actions from "../actions/action.js"
 // アイコン
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -29,16 +29,19 @@ export class ShowCrawlSetting extends React.Component {
       modalIndex:0,
       selectedItem:null,
       selectedCrawling:null,
-      recentFileUpdate:"未取得",
+      recentFileUpdate:"未取得"
     }
-  }
-
-  ///////////////////////////////////////////////////////////////// 
-  // componentWillMount()
-  componentWillMount() {
+    // クローリングステータスの状態更新
+    this.startCrawlingStatusInterval();
     // メイン画面のCSSファイル解除
     cssFileControl("App.css", "showCrawlSetting.css");
     // 最終クロール日時
+    this.UpdateFileDate();
+  }
+
+  ///////////////////////////////////////////////////////////////// 
+  // 最終クロール日時
+  UpdateFileDate = () => {
     recentUpdateFileDate(1, "mtime") // パラメータ:2は区分リスト
     .then((response) => {
       if(response) {
@@ -119,52 +122,89 @@ export class ShowCrawlSetting extends React.Component {
   execCrawling = () => {
     var element = document.getElementById("p-status-data");
     var status= this.props.status;
-
     if(status === "停止" || status === "エラー" || status === "実行完了") {
-      this.props.setCrawlingStatus("実行中");
-      cssFileAble("loading.css");
-      element.style.backgroundColor = "#00FF3B";
-      // クローリング実行処理呼び出し、実行結果取得
+      // クローリング実行処理呼び出し
       execCrawling()
       .then((response) => {
         // クローリングプログラム実行結果：正常終了
         if(response) {
-          // 実行結果レスポンスが返却された場合、ステータスを「実行完了」に。ローディングCSSを無効に。
-          this.props.setCrawlingStatus("実行完了");
-          cssFileDisable("loading.css");
-          element.style.backgroundColor = "#FF4F02";          
-          // 最終クローリング日時を更新
-          recentUpdateFileDate(1, "mtime") // パラメータ:2は区分リスト
-          .then((response) => {
-            if(response) {
-              this.setState({recentFileUpdate:this.props.mtime});
-              // コンテンツファイル名のリストを取得
-              recentUpdateFileDate(1, "list").then(() => {});
-            } else {
-              this.setState({recentFileUpdate:"取得できませんでした"});
-            }
-            cssFileDisable("loading.css");
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-        // クローリングプログラム実行結果：異常終了
+          this.props.setCrawlingStatus("実行中");
+          element.style.backgroundColor = "#00FF3B";
         } else {
+        // クローリングプログラム実行結果：異常終了
           this.props.setCrawlingStatus("エラー");
-          cssFileDisable("loading.css");
-          element.style.backgroundColor = "#FF0000";
+          element.style.backgroundColor = "#FF0000";          
         }
       })
       .catch((error) => {
+        // クローリングプログラム実行結果：異常終了
         console.error(error);
         this.props.setCrawlingStatus("エラー");
-        cssFileDisable("loading.css");
         element.style.backgroundColor = "#FF0000";
       });
     } else {
+      // クローリングプログラムの呼び出しを行わない
       alert("クローリング実行中は無効です。");
     }
   };
+
+  ///////////////////////////////////////////////////////////////// 
+  // クローリングステータスの状態更新を20秒間隔で行う
+  startCrawlingStatusInterval = () =>{
+    // クロール実行中のみ処理を行う
+    var Id = setInterval(()=>{
+      this.callUpdateCrawlingStatus()
+    }, 20000);
+    this.props.set_sokcet_intervalID(Id);
+  }
+
+  ///////////////////////////////////////////////////////////////// 
+  // クローリングステータスの状態更新をストップさせる
+  stopCrawlingStatusInterval = () =>{
+    if (this.props.thisIntervalId != 0) {
+      clearInterval(this.props.thisIntervalId);
+      this.props.set_sokcet_intervalID(0);  
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////// 
+  // クローリングステータスの状態更新
+  callUpdateCrawlingStatus = () => {
+    // HTMLエレメント取得
+    var element = document.getElementById("p-status-data");
+    // ソケット接続要求
+    const socket = io("http://localhost:3000");
+    // クローリングプログラムの実行ステータスを受信
+    socket.on("info", (msg) => {
+      // ストアのデータを更新
+      switch (msg) {
+        case 0:
+          this.props.setCrawlingStatus("実行中");
+          element.style.backgroundColor = "#00FF3B";
+          break;
+        case 1:
+          this.props.setCrawlingStatus("実行完了");
+          element.style.backgroundColor = "#FF4F02";
+          this.stopCrawlingStatusInterval();
+          break;
+        case -1:
+          this.props.setCrawlingStatus("エラー");
+          element.style.backgroundColor = "#FF0000";
+          this.stopCrawlingStatusInterval();
+          break;
+        case 99:
+          this.props.setCrawlingStatus("停止");
+          element.style.backgroundColor = "#005FFF";
+          break;
+        default:
+          this.props.setCrawlingStatus("停止");
+          element.style.backgroundColor = "#005FFF";
+          break;
+      }
+      // 切断
+      socket.close();
+    });
+  }
 
   ///////////////////////////////////////////////////////////////// 
   // レンダー
@@ -199,7 +239,7 @@ export class ShowCrawlSetting extends React.Component {
     return(
       <div>
         <Grid container spacing={1}>
-          <Grid Item xs={3} style={{padding: "0.5em"}}>
+          <Grid Item xs={4} style={{padding: "0.5em"}}>
             <Button
               id="button-krawlsetting"
               style={{margin:"0.5em", backgroundColor:"#1976d2", color:"#FFF"}}
@@ -219,6 +259,14 @@ export class ShowCrawlSetting extends React.Component {
               onClick={()=>this.execCrawling()}
               startIcon={<ScreenSearchDesktopIcon/>}
             >すべて開始</Button>
+            <Button
+              id="button-krawlsetting"
+              style={{margin:"0.5em", backgroundColor:"#1976d2", color:"#FFF"}}
+              size="small"
+              variant="contained"
+              onClick={()=>this.callUpdateCrawlingStatus()}
+              startIcon={<ScreenSearchDesktopIcon/>}
+            >再読み込み</Button>
           </Grid>
           <Grid Item id="crawl-status" xs={2} style={{padding: "0.5em", margin:"0.5em"}}>
             <div id="label-reffer-title" style={{fontSize:"10pt", color:"#FFF"}}><p>参照データ</p></div>
@@ -258,11 +306,13 @@ const mapStateToProps = (state) => ({
   thisCrawlingList: state.componentReducer.thisCrawlingList.crawling,
   selectedFileName: state.componentReducer.selectedFileName,
   status: state.componentReducer.status,
-  mtime: state.componentReducer.mtime
+  mtime: state.componentReducer.mtime,
+  thisIntervalId: state.componentReducer.thisIntervalId
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setCrawlingStatus: str => dispatch(actions.SET_CRAWLING_STATUS(str))
+  setCrawlingStatus: str => dispatch(actions.SET_CRAWLING_STATUS(str)),
+  set_sokcet_intervalID: int => dispatch(actions.SET_SOCKET_INTERVALID(int)),
 });
 
 const ContainerShowCrawlSetting = connect(

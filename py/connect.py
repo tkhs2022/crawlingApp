@@ -38,6 +38,9 @@ lengthHttp = 7
 #ログ出力インスタンス生成
 log = makeLog.Log()
 
+# クロール実行完了の通知をAPIへHTTPリクエスト
+backendUrl = 'http://localhost:3001/updateFromPy'
+
 ############################################################
 #jsonファイルを読み込み、オブジェクトを返却する関数
 ############################################################
@@ -484,7 +487,8 @@ def fileExistsCheck(json_name):
 #メイン関数
 ############################################################
 def main():
-	tragetJsonName = 'crawlingList.json'
+	global backendUrl
+	# tragetJsonName = 'crawlingList.json'
 	#パラメータのファイル存在確認
 	res = fileExistsCheck(tragetJsonName)
 	#ファイルが存在しなかった場合
@@ -519,6 +523,10 @@ def main():
 			elif your_cmd == 'n':
 				print('sys.exit(0)')
 				sys.exit(0)
+
+	# APIへ完了を通知
+	res = requests.get(backendUrl, timeout=(3.0, 7.5))
+	print(str(datetime.datetime.now()) + ' ' + res.json()['message'])
 
 ############################################################
 #メインメソッド

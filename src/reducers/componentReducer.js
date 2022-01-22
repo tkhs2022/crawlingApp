@@ -10,7 +10,8 @@ export const initialState = {
 	mtime:"未取得",
 	status:"停止",
 	thisKubunList:null,
-	thisCrawlingList:null
+	thisCrawlingList:null,
+	thisIntervalId:0
 };
 
 export const componentReducer = (state = initialState, action) => {
@@ -52,6 +53,11 @@ export const componentReducer = (state = initialState, action) => {
 				thisCrawlingList:action.crawlingList
 			}
 
+		case "SET_SOCKET_INTERVALID":
+			return {
+				...state,
+				thisIntervalId:action.intervalId
+			}
 		default:
 			return state;
 	}

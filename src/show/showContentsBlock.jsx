@@ -10,21 +10,11 @@ import {SiteHedderActiveM} from './showContentsArea.jsx';
 // MoveBlockOnClick関数呼び出し時のパラメータに、自身の関数名を入れる。
 import {CaseA, CaseB} from './showContentsArea.jsx';
 import { connect } from 'react-redux';
-import { cssFileAble, cssFileDisable } from '../commonFunc.js';
 ///////////////////////////////////////////////////////////////// 
 // コンテンツブロックをコントロール。コンテンツごとに記事を振り分け。(初回のみ)
 export class ContentsBlockControl extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  componentWillMount() {
-    // storeアクセスでの待機中はローディングCSSを流す
-    cssFileAble("loading.css");
-  }
-
-  componentDidMount() {
-    cssFileDisable("loading.css");
   }
 
   render() {
@@ -94,7 +84,6 @@ export const MoveBlockOnClick = (TargetKbn, Caller) => {
 const mapStateToProps = (state) => ({
   thisContentsArticle: state.componentReducer.thisContents.article,
   selectedFileName: state.componentReducer.selectedFileName,
-  status: state.componentReducer.status,
   mtime: state.componentReducer.mtime
 });
 

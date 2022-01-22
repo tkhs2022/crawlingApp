@@ -38,7 +38,7 @@ export function LoginUI(props) {
 
     return (
       <div>
-        <Paper style={{maxWidth:"30%", margin:"0 auto", marginTop:"15%"}}>
+        <Paper style={{maxWidth:"25%", margin:"0 auto", marginTop:"15%"}}>
           <div>
             <div style={{ color: "red"}}>
               <p style={{margin:"0 auto", padding:"10px"}}>{message}</p>
@@ -46,7 +46,7 @@ export function LoginUI(props) {
             <div>
               <TextField
                 label="ユーザー"
-                style={{width: "80%", margin: 8, fontSize:"midium"}}
+                style={{width:"80%", marginLeft:"1.5em", marginBottom: "1em", fontSize:"midium"}}
                 rows={1}
                 onChange={(e) => setUser(e.target.value)}
               ></TextField>
@@ -54,14 +54,14 @@ export function LoginUI(props) {
             <div>
               <TextField
                 label="パスワード"
-                style={{width: "80%", margin: 8, fontSize:"midium"}}
+                style={{width: "80%", marginLeft:"1.5em", marginBottom: "1em", fontSize:"midium"}}
                 rows={1}
                 onChange={(e) => setPassword(e.target.value)}
               ></TextField>
             </div>
           </div>
           <Grid container style={{fontSize:"midium"}} justifyContent="flex-end" direction="row">
-            <Grid item>
+            <Grid item style={{marginRight:"2em"}}>
               <Button
                 style={{margin: "1.5em", fontSize:"midium"}}
                 variant="contained"
