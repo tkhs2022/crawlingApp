@@ -173,7 +173,8 @@ export class ShowCrawlSetting extends React.Component {
     // HTMLエレメント取得
     var element = document.getElementById("p-status-data");
     // ソケット接続要求
-    var originName = this.props.thisLocation + ":" + this.props.thisPort;
+    // var originName = this.props.thisLocation + ":" + this.props.thisPort;
+    var originName = this.props.thisLocation;
     console.log(originName);
     const socket = io(originName);
     // クローリングプログラムの実行ステータスを受信
