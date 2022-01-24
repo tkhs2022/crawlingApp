@@ -36,8 +36,6 @@ class ShowKubunSetting extends React.Component {
     // 区分セットの最終更新日時を取得
     this.recentKubunUpdateDate();
     // クローリングステータスの状態更新をストップさせる
-    console.log("in showKubunSetting.jsx");
-    console.log(this.props.thisIntervalId);
     if (this.props.thisIntervalId != 0) {
       clearInterval(this.props.thisIntervalId);
       this.props.set_sokcet_intervalID(0);

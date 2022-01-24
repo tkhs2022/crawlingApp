@@ -97,6 +97,8 @@ export const SET_LOCATION_URL = (nowLocation) => {
     var pattern = "localhost";
     if (nowLocation.match(pattern)) {
         nowLocation = nowLocation.replace(":3000/", "");
+    } else {
+        nowLocation = "https://mysterious-brushlands-19415.herokuapp.com"
     }
     return {
         type:ActionType.SET_LOCATION_URL,
