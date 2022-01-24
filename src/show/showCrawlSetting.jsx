@@ -150,9 +150,9 @@ export class ShowCrawlSetting extends React.Component {
 
   ///////////////////////////////////////////////////////////////// 
   // クローリングステータスの状態更新を20秒間隔で行う
-  startCrawlingStatusInterval = () =>{
+  startCrawlingStatusInterval = () => {
     // クロール実行中のみ処理を行う
-    var Id = setInterval(()=>{
+    var Id = setInterval(() => {
       this.callUpdateCrawlingStatus()
     }, 20000);
     this.props.set_sokcet_intervalID(Id);
@@ -160,7 +160,7 @@ export class ShowCrawlSetting extends React.Component {
 
   ///////////////////////////////////////////////////////////////// 
   // クローリングステータスの状態更新をストップさせる
-  stopCrawlingStatusInterval = () =>{
+  stopCrawlingStatusInterval = () => {
     if (this.props.thisIntervalId != 0) {
       clearInterval(this.props.thisIntervalId);
       this.props.set_sokcet_intervalID(0);  
@@ -173,7 +173,9 @@ export class ShowCrawlSetting extends React.Component {
     // HTMLエレメント取得
     var element = document.getElementById("p-status-data");
     // ソケット接続要求
-    const socket = io("http://localhost:3000");
+    var originName = this.props.thisLocation + ":" + this.props.thisPort;
+    console.log(originName);
+    const socket = io(originName);
     // クローリングプログラムの実行ステータスを受信
     socket.on("info", (msg) => {
       // ストアのデータを更新
@@ -307,7 +309,9 @@ const mapStateToProps = (state) => ({
   selectedFileName: state.componentReducer.selectedFileName,
   status: state.componentReducer.status,
   mtime: state.componentReducer.mtime,
-  thisIntervalId: state.componentReducer.thisIntervalId
+  thisIntervalId: state.componentReducer.thisIntervalId,
+  thisPort: state.loginReducer.thisPort,
+  thisLocation: state.loginReducer.thisLocation,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -8,7 +8,9 @@ export const dumb = (state = {}) => state;
 export const initialState = {
     session:false,
     status:0,    // 0:処理前 1:ログイン成功 -1:ログイン失敗
-    user:null
+    user:null,
+    thisPort:3001,
+    thisLocation:null
 };
 
 export const loginReducer = (state = initialState, action) => {
@@ -21,6 +23,10 @@ export const loginReducer = (state = initialState, action) => {
             return { ...state, session:false, status:-1}
         case "LOGOUT":
             return { ...state, session:false, status:0}    
+        case "SET_PORT":
+            return { ...state, thisPort:action.port}
+        case "SET_LOCATION_URL":
+            return { ...state, thisLocation:action.location}
         default:
             return state;
     }

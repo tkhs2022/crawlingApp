@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginUI from './loginUi.jsx';
+import setThisOriginName from './actions/login.js';
 import getContentsList from './actions/contentsList.js';
 import { recentUpdateFileDate } from './actions/contentsList.js';
 import getKbnList from './actions/kubunList.js';
@@ -19,6 +20,7 @@ export default class App extends React.Component {
   constructor (props){
     super(props);
     Promise.resolve()
+    .then(setThisOriginName())
     .then(getContentsList(store.getState().componentReducer.selectedFileName))
     .then(getKbnList())
     .then(getCrawlingList())

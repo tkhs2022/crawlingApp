@@ -24,9 +24,6 @@ format_date1 = '{0:%Y%m%d}'.format(datetime.datetime.now())
 format_date2 = '{0:%Y-%m-%d}'.format(datetime.datetime.now())
 
 #グローバル変数定義
-pathCrawlingList = './backend/data/crawling/'
-pathContentsList = './backend/data/contents/'
-
 tragetJsonName = ''
 contentsResObj = {'article':[]}
 TargetJsonObj = ''
@@ -38,9 +35,20 @@ lengthHttp = 7
 #ログ出力インスタンス生成
 log = makeLog.Log()
 
-# クロール実行完了の通知をAPIへHTTPリクエスト
+# クロール実行完了の通知をAPIへHTTPリクエストするためのポート番号
+# herokuではポートを動的に割り当てている
 port = sys.argv[2]
+
+############################################
+# 環境によって切り替える設定
+############################################
+# ロケーション
 backendUrl = 'https://mysterious-brushlands-19415.herokuapp.com:' + port + '/updateFromPy'
+# backendUrl = 'http://localhost:' + port + '/updateFromPy'
+
+# jsonデータ格納先
+pathCrawlingList = './backend/data/crawling/'
+pathContentsList = './backend/data/contents/'
 
 ############################################################
 #jsonファイルを読み込み、オブジェクトを返却する関数
@@ -526,8 +534,13 @@ def main():
 				sys.exit(0)
 
 	# APIへ完了を通知
-	res = requests.get(backendUrl, timeout=(3.0, 7.5))
-	print(str(datetime.datetime.now()) + ' ' + res.json()['message'])
+	try :
+		res = requests.get(backendUrl, timeout=(3.0, 7.5))
+		print(str(datetime.datetime.now()) + ' ' + res.json()['message'])
+	except urllib3.exceptions.LocationParseError as e:
+			log.outputLog(-1, inspect.currentframe().f_code.co_name, traceback.format_exc(), str(e.__class__))
+	except requests.exceptions.InvalidURL as e:
+		log.outputLog(-1, inspect.currentframe().f_code.co_name, traceback.format_exc(), str(e.__class__))
 
 ############################################################
 #メインメソッド

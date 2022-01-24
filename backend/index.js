@@ -60,6 +60,26 @@ server.listen(port);
 console.log(new Date().toLocaleString('ja-JP') + " " + `Web server is on. PortNumber is ${port}.`);
 ///////////////////////////////////////////////////////////////// 
 ///////////////////////////////////////////////////////////////// 
+// ポート番号送信処理
+app.get("/setThisOriginName", (req, res) => {
+	var nowDate = new Date();
+	var resArray = {flag:false, thisPort:null};
+	try {
+		console.log(nowDate.toLocaleString('ja-JP') + " " + "/setThisOriginName post response. with: login.js setThisOriginName");
+		resArray.flag = true;
+		resArray.thisPort = port;
+		console.log(resArray);
+	} catch(error) {
+		console.error("error occered at index.js in setThisOriginName.");
+		console.error(error);
+		resArray.flag = false;
+		console.error(resArray.flag);
+	} finally {
+		res.json(resArray);
+	}
+});
+
+///////////////////////////////////////////////////////////////// 
 // ログ出力処理
 app.post("/logging", (req, res) => {
 	var nowDate = new Date();
@@ -308,16 +328,16 @@ app.get("/updateFromPy", (req, res) => {
 app.post("/py", (req, res) => {
 	var resJsonFileName = req.body.fileName;
 	var obj = {flag:true, msg:"nothing"}
-		try {
-			var result = execScript.execScript("python", pyPath + "/connect.py", resJsonFileName, port)
-			console.log(result)
-			execScript_flag = 0;
-		} catch(error) {
-			console.error(error);
-			result["flag"] = false;
-			execScript_flag = -1;
-		}
-		res.json(obj);
+	try {
+		var result = execScript.execScript("python", pyPath + "/connect.py", resJsonFileName, port)
+		console.log(result)
+		execScript_flag = 0;
+	} catch(error) {
+		console.error(error);
+		var result = {flag:true, msg:"error"};
+		execScript_flag = -1;
+	}
+	res.json(obj);
 });
 
 ///////////////////////////////////////////////////////////////// 

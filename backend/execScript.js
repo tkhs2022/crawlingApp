@@ -2,7 +2,7 @@ const {exec} = require("child_process");
 // test
 // const crawlingListJS = require("../src/actions/crawlingList.js");
 
-function execScript(exeName, pgName, resJsonFileName) {
+function execScript(exeName, pgName, resJsonFileName, port) {
     var cmd_str = exeName + " " + pgName + " " + resJsonFileName + " " + port
     var result = {flag:false, msg:"nothing"}
     process.on('unhandledRejection', console.dir);

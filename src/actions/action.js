@@ -50,7 +50,9 @@ export const ActionType = {
     LOGOUT:"LOGOUT",
     LOGIN_REQUEST:"LOGIN_REQUEST",
     LOGIN_RECEIVE_SUCCESS:"LOGIN_RECEIVE_SUCCESS",
-    LOGIN_RECEIVE_FAILED:"LOGIN_RECEIVE_FAILED"
+    LOGIN_RECEIVE_FAILED:"LOGIN_RECEIVE_FAILED",
+    SET_PORT:"SET_PORT",
+    SET_LOCATION_URL:"SET_LOCATION_URL"
 }
 
 // ログアウト処理
@@ -79,6 +81,26 @@ export const LOGIN_RECEIVE_SUCCESS = (nowUser) => {
 export const LOGIN_RECEIVE_FAILED = () => {
     return {
         type:ActionType.LOGIN_RECEIVE_FAILED
+    };
+}
+
+// ポート番号取得
+export const SET_PORT = (nowPort) => {
+    return {
+        type:ActionType.SET_PORT,
+        port:nowPort
+    };
+}
+
+// ロケーションURL取得
+export const SET_LOCATION_URL = (nowLocation) => {
+    var pattern = "localhost";
+    if (nowLocation.match(pattern)) {
+        nowLocation = nowLocation.replace(":3000/", "");
+    }
+    return {
+        type:ActionType.SET_LOCATION_URL,
+        location:nowLocation
     };
 }
 
