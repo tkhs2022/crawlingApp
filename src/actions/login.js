@@ -5,9 +5,7 @@ import store from "../store/store.js";
 // ポート番号とロケーションURL取得
 export default function setThisOriginName() {
 	return new Promise((resolve, reject) => {
-        console.log("this is setThisOriginName");
         var thisLocation = window.location.href;
-        console.log(thisLocation);
 		// fetch処理
 		fetch("/setThisOriginName", {
 			method: "GET",
@@ -25,8 +23,6 @@ export default function setThisOriginName() {
 			if(responseJson.flag) {
 				store.dispatch(action.SET_PORT(responseJson.thisPort));
 				store.dispatch(action.SET_LOCATION_URL(thisLocation));
-                console.log(store.getState().loginReducer.thisPort);
-                console.log(store.getState().loginReducer.thisLocation);
                 resolve(true);
 			}
 		})

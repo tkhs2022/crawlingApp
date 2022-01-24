@@ -173,7 +173,6 @@ export class ShowContentsArea extends React.Component{
 // ReactコンポーネントとReduxストアをコネクト
 const mapStateToProps = (state) => ({
 	thisKubunList: state.componentReducer.thisKubunList.kbns,
-  status: state.loginReducer.status,
   thisIntervalId: state.componentReducer.thisIntervalId
 });
 

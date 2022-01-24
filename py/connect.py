@@ -43,9 +43,8 @@ port = sys.argv[2]
 # 環境によって切り替える設定
 ############################################
 # ロケーション
-backendUrl = 'https://mysterious-brushlands-19415.herokuapp.com/updateFromPy'
-# backendUrl = 'https://mysterious-brushlands-19415.herokuapp.com:' + port + '/updateFromPy'
-# backendUrl = 'http://localhost:' + port + '/updateFromPy'
+# backendUrl = 'https://mysterious-brushlands-19415.herokuapp.com/updateFromPy'	# 本番環境で動作
+backendUrl = 'http://localhost:' + port + '/updateFromPy'	# 開発環境で動作
 
 # jsonデータ格納先
 pathCrawlingList = './backend/data/crawling/'

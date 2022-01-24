@@ -288,7 +288,6 @@ class ShowKubunSetting extends React.Component {
 const mapStateToProps = (state) => ({
 	thisKubunList: state.componentReducer.thisKubunList.kbns,
   thisCrawlingList: state.componentReducer.thisCrawlingList.crawling,
-  status: state.loginReducer.status,
   thisIntervalId: state.componentReducer.thisIntervalId
 });
 

@@ -29,20 +29,23 @@ export class ShowCrawlSetting extends React.Component {
       modalIndex:0,
       selectedItem:null,
       selectedCrawling:null,
-      recentFileUpdate:"未取得"
+      recentFileUpdate:"未取得",
     }
     // クローリングステータスの状態更新
     this.startCrawlingStatusInterval();
     // メイン画面のCSSファイル解除
     cssFileControl("App.css", "showCrawlSetting.css");
-    // 最終クロール日時
+    // 最終クロール日時とコンテンツファイル名のリストを取得
     this.UpdateFileDate();
   }
 
   ///////////////////////////////////////////////////////////////// 
   // 最終クロール日時
   UpdateFileDate = () => {
-    recentUpdateFileDate(1, "mtime") // パラメータ:2は区分リスト
+    Promise.resolve()
+    // 最終クロール日時の取得
+    .then(recentUpdateFileDate(1, "mtime"))
+    // this.stateに最終クロール日時をセット
     .then((response) => {
       if(response) {
         this.setState({recentFileUpdate:this.props.mtime});
@@ -50,6 +53,9 @@ export class ShowCrawlSetting extends React.Component {
         this.setState({recentFileUpdate:"取得できませんでした"});
       }
     })
+    // ストアに保存されているコンテンツファイル名のリストを更新
+    .then(recentUpdateFileDate(1, "list"))
+    // エラー処理
     .catch((error) => {
       console.error(error);
     });
@@ -173,10 +179,6 @@ export class ShowCrawlSetting extends React.Component {
     // HTMLエレメント取得
     var element = document.getElementById("p-status-data");
     // ソケット接続要求
-    // var originName = this.props.thisLocation + ":" + this.props.thisPort;
-    var originName = this.props.thisLocation;
-    console.log(this.props.thisLocation);
-    // const socket = io(originName);
     const socket = io.connect();
     // クローリングプログラムの実行ステータスを受信
     socket.on("info", (msg) => {
@@ -189,6 +191,7 @@ export class ShowCrawlSetting extends React.Component {
         case 1:
           this.props.setCrawlingStatus("実行完了");
           element.style.backgroundColor = "#FF4F02";
+          this.UpdateFileDate();
           this.stopCrawlingStatusInterval();
           break;
         case -1:
@@ -312,8 +315,6 @@ const mapStateToProps = (state) => ({
   status: state.componentReducer.status,
   mtime: state.componentReducer.mtime,
   thisIntervalId: state.componentReducer.thisIntervalId,
-  thisPort: state.loginReducer.thisPort,
-  thisLocation: state.loginReducer.thisLocation,
 });
 
 const mapDispatchToProps = (dispatch) => ({

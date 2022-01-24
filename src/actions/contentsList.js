@@ -41,6 +41,7 @@ export default function getContentsList(fileName) {
 // ファイルの更新日時を返す
 export function recentUpdateFileDate(fileKubun, request) {
 	return new Promise((resolve, reject) => {
+		console.log("recentUpdateFileDate called.");
 		// fetch処理
 		fetch("/recentUpdateFileDate", {
 			method: "POST",
