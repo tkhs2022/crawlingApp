@@ -175,8 +175,9 @@ export class ShowCrawlSetting extends React.Component {
     // ソケット接続要求
     // var originName = this.props.thisLocation + ":" + this.props.thisPort;
     var originName = this.props.thisLocation;
-    console.log(originName);
-    const socket = io(originName);
+    console.log(this.props.thisLocation);
+    // const socket = io(originName);
+    const socket = io.connect();
     // クローリングプログラムの実行ステータスを受信
     socket.on("info", (msg) => {
       // ストアのデータを更新
