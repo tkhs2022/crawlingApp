@@ -124,7 +124,9 @@ def urlAddOrigin(targetUrl, crawlingurl):
 ############################################################
 def requestsandXpath(targetUrl, unicodeFlag, xpathValue):
 	try:
-		res = requests.get(targetUrl, timeout=(3.0, 7.5))		
+		res = requests.get(targetUrl, timeout=(3.0, 7.5))
+		#レスポンスを解析するエンコーディングを、サイトのメタタグのエンコーディングに合わせる
+		res.encoding = res.apparent_encoding
 		html = res.text
 		#lxmlライブラリを使用し、HTMLをHtmlElementオブジェクトにする
 		if unicodeFlag == True:
@@ -197,6 +199,9 @@ def executeGetRequest(arrayList):
 
 			#getリクエスト送信。リクエストしたURLのレスポンスオブジェクトを取得
 			res = requests.get(arrayList['crawlingurl'], timeout=(3.0, 7.5))		
+			#レスポンスを解析するエンコーディングを、サイトのメタタグのエンコーディングに合わせる
+			res.encoding = res.apparent_encoding
+
 			html = res.text
 			status_code = str(res.status_code)
 			charcter = res.apparent_encoding
