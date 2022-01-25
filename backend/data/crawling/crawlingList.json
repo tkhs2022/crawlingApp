@@ -3,16 +3,6 @@
         {
             "kbn": 1,
             "kbnname": "ニュース",
-            "jigyosyaid": 1,
-            "name": "共同通信",
-            "crawlingurl": "https://www.kyodo.co.jp",
-            "xpathTitle": "//*[@id='Main']/div[3]/ul/li/a",
-            "xpathLink": "//*[@id='Main']/div[3]/ul/li/a",
-            "xpathImage": "/html/body/div[3]/div[1]/div[2]/div[5]/div[1]/img"
-        },
-        {
-            "kbn": 1,
-            "kbnname": "ニュース",
             "jigyosyaid": 2,
             "name": "産経新聞",
             "crawlingurl": "https://www.sankei.com/",
@@ -69,16 +59,6 @@
             "xpathTitle": "/html/body/div[1]/div[4]/main/div[2]/a/div[2]",
             "xpathLink": "/html/body/div[1]/div[4]/main/div[2]/a",
             "xpathImage": "/html/body/div[1]/div[4]/main/div[2]/a/div[1]/img"
-        },
-        {
-            "kbn": 1,
-            "kbnname": "ニュース",
-            "jigyosyaid": 8,
-            "name": "STVニュース北海道",
-            "crawlingurl": "https://www.stv.jp/news/index.html",
-            "xpathTitle": "//*[@id='dNewsTops']/ul[1]/li/a/h4",
-            "xpathLink": "//*[@id='dNewsTops']/ul[1]/li/a",
-            "xpathImage": "//*[@id='dNewsTops']/ul[1]/li/a/div[1]/img"
         },
         {
             "kbn": 3,
