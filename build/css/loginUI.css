@@ -1,0 +1,15 @@
+.loginUI-Typography {
+    font-size: 24pt!important;
+    letter-spacing: 0.12em!important;
+    font-weight: lighter!important;
+    text-align: center;
+    padding-bottom: 0.5em;
+}
+
+.loginUI-div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 40%;
+    margin-right: 40%;
+    margin-top: 10%;
+}
