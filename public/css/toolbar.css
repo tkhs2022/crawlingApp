@@ -12,7 +12,8 @@
 /* ツールバーのテキスト */
 .toolbarTypography {
     font-size:16pt!important;
-    font-weight: 100!important;
+    font-weight: lighter!important;
+    letter-spacing: 0.2em!important;
 }
 
 /*(共通)ツールバーのフォントサイズ*/

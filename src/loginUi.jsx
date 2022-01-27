@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import Login from "./actions/action.js";
 import Paper from '@material-ui/core/Paper';
+import Typography from '@mui/material/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -37,11 +38,16 @@ export function LoginUI(props) {
   }
 
     return (
-      <div>
-        <Paper style={{maxWidth:"25%", margin:"0 auto", marginTop:"15%"}}>
+      <div className="loginUI-div">
+        <div>
+          <Typography className="loginUI-Typography" variant="h6" noWrap component="div">
+            Site Checker...
+          </Typography>
+        </div>
+        <Paper>
           <div>
             <div style={{ color: "red"}}>
-              <p style={{margin:"0 auto", padding:"10px"}}>{message}</p>
+              <p style={{margin:"0 auto", padding:"10px", fontSize:"10pt"}}>{message}</p>
             </div>
             <div>
               <TextField
@@ -60,10 +66,10 @@ export function LoginUI(props) {
               ></TextField>
             </div>
           </div>
-          <Grid container style={{fontSize:"midium"}} justifyContent="flex-end" direction="row">
-            <Grid item style={{marginRight:"2em"}}>
+          <Grid container style={{fontSize:"midium"}} justifyContent="center" direction="row">
+            <Grid item>
               <Button
-                style={{margin: "1.5em", fontSize:"midium"}}
+                style={{margin: "1.5em", fontSize:"midium", backgroundColor:"#826c6c"}}
                 variant="contained"
                 color="secondary"
                 onClick={(e) => onLogin(e)}

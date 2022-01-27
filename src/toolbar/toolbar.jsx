@@ -158,7 +158,7 @@ function ResponsiveDrawer(props) {
 			<AppBar	position="fixed" sx={{width: { sm: `calc(100% - ${drawerWidth}px)` },ml: { sm: `${drawerWidth}px` },}}>
 			<Toolbar style={{justifyContent:"space-between"}}>
 				{/* タイトル */}	
-				<Typography className="toolbarTypography"variant="h6" noWrap component="div" style={{fontSize:"16pt!important"}}>Site Checker...</Typography>
+				<Typography className="toolbarTypography" variant="h6" noWrap component="div">Site Checker...</Typography>
 				<IconButton
 					color="inherit"
 					aria-label="opencontentsDrawer"
